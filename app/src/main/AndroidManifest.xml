@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vn.poly.musicoffline">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MusicOffline">
+        <activity android:name=".manage.TimKiem_Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".manage.Chao_Activity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".manage.GioiThieu_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".manage.TrinhPhatNhac_Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".manage.NgheSi_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".manage.DanhSach_Activity"
+            android:screenOrientation="portrait" />
+        <!-- screenOrientation không cho xoay màn hình chỉ ở chế độ màn hình dọc -->
+        <!-- windowSoftInputMode khi có bàn phím hiện lên thì không bị đẩy layout lene -->
+        <!-- launchMode chế độ khi activity đã tồn tại trong task r thì gọi ra k khởi tạo mới -->
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <service android:name=".PlayerMusicService" />
+    </application>
+
+</manifest>

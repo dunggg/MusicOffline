@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_music"
+        android:icon="@drawable/ic_music"
+        android:title="Bài hát" />
+    <item
+        android:id="@+id/menu_danhSach"
+        android:icon="@drawable/ic_article"
+        android:title="Danh sách" />
+    <item
+        android:id="@+id/menu_ngheSi"
+        android:icon="@drawable/ic_people"
+        android:title="Nghệ sĩ" />
+    <item
+        android:id="@+id/menu_uaThich"
+        android:icon="@drawable/ic_baseline_favorite"
+        android:title="Ưa thích" />
+</menu>
