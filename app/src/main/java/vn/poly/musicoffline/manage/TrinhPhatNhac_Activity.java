@@ -328,11 +328,18 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         builder.setView(view1);
 
         ListView lv_dialog_menu_danhSachPhat = view1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
-        playLists = new ArrayList<>();
-        playLists = playList_dao.getAllPlayList();
+        TextView tv_dialog_soLuong_danhSach = view1.findViewById(R.id.tv_dialog_soLuong_danhSach);
+
         List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(TrinhPhatNhac_Activity.this, playLists);
         lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+
         Dialog dialog = builder.create();
+
+        playLists = new ArrayList<>();
+        playLists = playList_dao.getAllPlayList();
+
+        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
+
         lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -341,7 +348,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 if (!playList_dao.checkSongInPlayList(playLists.get(position).getId(), music.getId())) {
                     playList_dao.addTrackToPlaylist(TrinhPhatNhac_Activity.this, music.getId(), Long.parseLong(playLists.get(position).getId()));
 
-                    // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
+                    // nếu danh sách đang phát bằng danh sách hiện tại vừa thêm vào
                     if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
                         MainActivity.songPlayList.add(music);
                     }

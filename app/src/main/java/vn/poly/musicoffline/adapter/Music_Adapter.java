@@ -107,15 +107,15 @@ public class Music_Adapter extends BaseAdapter {
                         ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
                         TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
 
+                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
+                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+
                         Dialog dialog = builder.create();
 
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
 
                         tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
-
-                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
-                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
 
                         // nhấn vào playlist để thêm bài hát
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {

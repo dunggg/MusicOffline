@@ -36,6 +36,7 @@ public class Music_PlayList_Adapter extends BaseAdapter {
         this.context = context;
         this.musicList = musicList;
         this.idPlayList = idPlayList;
+
     }
 
     @Override
@@ -55,7 +56,6 @@ public class Music_PlayList_Adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-
         playList_dao = new PlayList_Dao(context);
 
         view = LayoutInflater.from(context).inflate(R.layout.view_music_playlist, null);
