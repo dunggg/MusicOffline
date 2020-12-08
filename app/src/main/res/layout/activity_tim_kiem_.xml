@@ -17,18 +17,17 @@
             android:id="@+id/toolbar_timKiem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_back">
+            app:navigationIcon="@drawable/ic_back2">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/SearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/shapesearch"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@null"
                 app:queryHint="Tìm kiếm bài hát..." />
-
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
