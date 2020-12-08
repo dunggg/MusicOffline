@@ -468,6 +468,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 }
                 tv_music_trinhPhatNhac.setText(music.getTitle());
                 tv_ngheSi_trinhPhatNhac.setText(music.getArtist());
+                tv_tongThoiGian_trinhPhatNhac.setText(convertDuration(MediaPlayer.create(context, Uri.parse(music.getUri())).getDuration()));
                 img_play_trinhPhatNhac.setImageResource(R.drawable.ic_pause2);
 
                 // kiểm tra xem bài hát có nằm trong mục yêu thích không
@@ -484,6 +485,11 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                     img_play_trinhPhatNhac.setImageResource(R.drawable.ic_pause2);
                 }
             }
+        }
+
+        private String convertDuration(int duration) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+            return simpleDateFormat.format(duration);
         }
     }
 

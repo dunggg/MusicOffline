@@ -78,10 +78,18 @@ public class DanhSach_Adapter extends BaseAdapter {
                         tv_dialog_add_folder.setOnClickListener(view23 -> {
                             // sửa danh sách
                             String name = txt_dialog_name_folder.getText().toString().trim();
-                            playList.setName(name);
-                            playList_dao.updatePlayList(playList.getId(), name);
-                            notifyDataSetChanged();
-                            alertDialog.cancel();
+                            if (playList_dao.checkNamePlayList(name) && !name.equals("")||name.equals(playList.getName())) {
+                                playList.setName(name);
+                                playList_dao.updatePlayList(playList.getId(), name);
+                                notifyDataSetChanged();
+                                alertDialog.cancel();
+                                Toast.makeText(context, "Sửa  danh sách thành công", Toast.LENGTH_SHORT).show();
+                            } else if (name.isEmpty()) {
+                                txt_dialog_name_folder.setError("Không được nhập trống");
+                                return;
+                            } else {
+                                txt_dialog_name_folder.setError("Danh sách " + name + " đã tồn tại");
+                            }
                         });
 
                         tv_dialog_cancel_folder.setOnClickListener(view22 -> alertDialog.cancel());
