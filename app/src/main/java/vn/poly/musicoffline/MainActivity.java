@@ -103,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);
 
         registerMyBroadCastUpdateNotification();
-
         registerBroadCastUpdateUi();
-
         Intent intent = new Intent(this, PlayerMusicService.class);
 
         // nếu đc cấp quyền thì load fragment vào activity
