@@ -43,4 +43,5 @@ public class ViewPager_Adapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return 4;
     }
+
 }

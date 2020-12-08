@@ -2,6 +2,7 @@ package vn.poly.musicoffline.manage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -9,9 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,15 +19,14 @@ import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
-import vn.poly.musicoffline.adapter.Music_Adapter;
+import vn.poly.musicoffline.adapter.DanhSachBaiHat_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.model.Music;
 
 public class TimKiem_Activity extends AppCompatActivity implements SearchView.OnQueryTextListener {
-    ImageView img_back_timKiem;
     SearchView searchView;
     ListView lv_music_timKiem;
-    Music_Adapter music_adapter;
+    DanhSachBaiHat_Adapter baiHat_adapter;
     List<Music> listSearchMusic;
     FrameLayout frameLayout;
 
@@ -36,8 +34,8 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tim_kiem_);
-
         anhXa();
+        toolbar_timKiem();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(this, "Bạn phải cấp quyền truy cập vào bộ nhớ mới có thể sử dụng chức năng này", Toast.LENGTH_SHORT).show();
@@ -47,36 +45,37 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
         searchView.setOnQueryTextListener(this);
 
         listSearchMusic = new ArrayList<>();
-        music_adapter = new Music_Adapter(listSearchMusic, this);
-        lv_music_timKiem.setAdapter(music_adapter);
+        baiHat_adapter = new DanhSachBaiHat_Adapter(listSearchMusic);
+        lv_music_timKiem.setAdapter(baiHat_adapter);
 
-        lv_music_timKiem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.checkListMusic = MainActivity.listSong;
-                Music_Fragment.positionBaiHat = searchPosition(listSearchMusic.get(position).getUri());
-                MainActivity.playerMusicService.play(listSearchMusic.get(position), MainActivity.listSong);
-                startActivity(new Intent(TimKiem_Activity.this, TrinhPhatNhac_Activity.class));
-            }
+        lv_music_timKiem.setOnItemClickListener((parent, view, position, id) -> {
+            MainActivity.checkListMusic = MainActivity.listSong;
+            Music_Fragment.positionBaiHat = searchPosition(listSearchMusic.get(position).getUri());
+            MainActivity.playerMusicService.play(listSearchMusic.get(position), MainActivity.listSong);
+            startActivity(new Intent(TimKiem_Activity.this, TrinhPhatNhac_Activity.class));
         });
 
-        img_back_timKiem.setOnClickListener(view -> startActivity(new Intent(getBaseContext(), MainActivity.class)));
+    }
 
+    // hàm toolbar
+    public void toolbar_timKiem() {
+        Toolbar toolbar = findViewById(R.id.toolbar_timKiem);
+        toolbar.setTitle("");
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(getBaseContext(), MainActivity.class)));
     }
 
     //ánh xạ
     public void anhXa() {
         frameLayout = findViewById(R.id.frameLayout);
         searchView = findViewById(R.id.SearchView);
-        img_back_timKiem = findViewById(R.id.img_back_timKiem);
         lv_music_timKiem = findViewById(R.id.lv_music_timKiem);
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (!searchTenBaiHat(query)) {
-            music_adapter.notifyDataSetChanged();
-            Toast.makeText(this, "Không tìm thấy tên bài hát bạn vừa nhập", Toast.LENGTH_SHORT).show();
+            baiHat_adapter.notifyDataSetChanged();
+            Toast.makeText(this, "Không tìm thấy bài hát " + query, Toast.LENGTH_SHORT).show();
         }
         searchView.clearFocus();
         return false;
@@ -108,7 +107,7 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
                 }
             }
         }
-        music_adapter.notifyDataSetChanged();
+        baiHat_adapter.notifyDataSetChanged();
     }
 
     private boolean searchTenBaiHat(String ten) {
@@ -131,4 +130,5 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
         }
         return -1;
     }
+
 }

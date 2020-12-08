@@ -128,7 +128,6 @@
             android:text="00:00"
             android:textColor="#fcffff"
             android:textSize="14dp" />
-
     </LinearLayout>
 
     <LinearLayout

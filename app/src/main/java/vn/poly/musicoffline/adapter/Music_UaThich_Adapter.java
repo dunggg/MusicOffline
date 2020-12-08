@@ -3,12 +3,10 @@ package vn.poly.musicoffline.adapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +24,6 @@ import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
-import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.Favorite_Dao;
@@ -35,7 +32,6 @@ import vn.poly.musicoffline.sql.PlayList_Dao;
 public class Music_UaThich_Adapter extends BaseAdapter {
     List<Music> musicList;
     Context context;
-
     List<PlayList> playLists;
     PlayList_Dao playList_dao;
     Favorite_Dao favorite_dao;
@@ -97,70 +93,60 @@ public class Music_UaThich_Adapter extends BaseAdapter {
         }.execute(music.getUri());
 
         // khi nhấn vào img more
-        img_view_more_music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // create popup menu
-                PopupMenu popupMenu = new PopupMenu(view.getContext(), img_view_more_music);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_music, popupMenu.getMenu());
-                // bắt sự kiện khi nhấn vào item ở menu
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_add_danhSachPhat:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(viewGroup.getContext());
-                                View viewa1 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dialog_menu_danh_sach_phat, null);
-                                builder.setView(viewa1);
+        img_view_more_music.setOnClickListener(view12 -> {
+            // create popup menu
+            PopupMenu popupMenu = new PopupMenu(view12.getContext(), img_view_more_music);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_music, popupMenu.getMenu());
+            // bắt sự kiện khi nhấn vào item ở menu
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_add_danhSachPhat:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(viewGroup.getContext());
+                        View viewa1 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dialog_menu_danh_sach_phat, null);
+                        builder.setView(viewa1);
 
-                                ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
-                                TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
+                        ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
+                        TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
 
-                                Dialog dialog = builder.create();
+                        Dialog dialog = builder.create();
 
-                                playLists = new ArrayList<>();
-                                playLists = playList_dao.getAllPlayList();
+                        playLists = new ArrayList<>();
+                        playLists = playList_dao.getAllPlayList();
 
-                                List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
-                                lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
+                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
 
-                                tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
+                        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
-                                // nhấn vào playlist để thêm bài hát
-                                lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                                        // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
-                                        if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
-                                            playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
+                        // nhấn vào playlist để thêm bài hát
+                        lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view1, i, id) -> {
+                            // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+                            if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
+                                playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
 
-                                            // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
-                                            if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
-                                                MainActivity.songPlayList.add(music);
-                                            }
-                                            Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
-                                            dialog.cancel();
+                                // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
+                                if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                                    MainActivity.songPlayList.add(music);
+                                }
+                                Toast.makeText(context, "Thêm bài hát " + music.getTitle() + " vào danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
 
-                                        } else {
-                                            Toast.makeText(context, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                                dialog.show();
-                                break;
+                            } else {
+                                Toast.makeText(context, "Bài hát " + music.getTitle() + " đã tồn tại trong danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        dialog.show();
+                        break;
 
-                            case R.id.menu_delete_music:
-                                favorite_dao.update(music.getId(),1);
-                                musicList.remove(position);
-                                notifyDataSetChanged();
-                                break;
-
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
+                    case R.id.menu_delete_music:
+                        favorite_dao.update(music.getId(), 1);
+                        musicList.remove(position);
+                        notifyDataSetChanged();
+                        break;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
 
         return view;

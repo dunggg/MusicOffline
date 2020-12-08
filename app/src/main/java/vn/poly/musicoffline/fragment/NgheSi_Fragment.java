@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.adapter.NgheSi_Adapter;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 public class NgheSi_Fragment extends Fragment {
+    TextView tv_soLuong_ngheSi;
     ListView lv_frag_ngheSi;
     List<String> ngheSiList;
     NgheSi_Adapter ngheSi_adapter;
@@ -39,6 +40,7 @@ public class NgheSi_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nghe_si_, container, false);
 
         //ánh xạ
+        tv_soLuong_ngheSi = view.findViewById(R.id.tv_soLuong_ngheSi);
         lv_frag_ngheSi = view.findViewById(R.id.lv_frag_ngheSi);
 
         // load data trên 1 luồng khác
@@ -55,6 +57,7 @@ public class NgheSi_Fragment extends Fragment {
                 super.onPostExecute(o);
                 ngheSi_adapter = new NgheSi_Adapter(getContext(), ngheSiList);
                 lv_frag_ngheSi.setAdapter(ngheSi_adapter);
+                tv_soLuong_ngheSi.setText(ngheSiList.size() + " nghệ sĩ");
             }
         }.execute();
 

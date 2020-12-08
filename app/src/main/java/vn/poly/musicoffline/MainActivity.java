@@ -15,7 +15,6 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -32,6 +31,8 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,17 +69,15 @@ public class MainActivity extends AppCompatActivity {
     MyBroadcastUpdateUi myBroadcastUpdateUi;
     ServiceConnection serviceConnection;
     SharedPreferences sharedPreferences;
+    Animation a1, a2;
     public static PlayerMusicService playerMusicService;
     // list để kiểm tra xem đang phát ở phần nhạc nào
     public static List<Music> checkListMusic;
     public static List<Music> listSong;
     public static List<Music> songPlayList;
-    final int REQUEST_CODE_ACTION_PICK = 345;
-
     PlayList_Dao playList_dao;
-
+    final int REQUEST_CODE_ACTION_PICK = 345;
     public static final String BROADCAST_ACTION_MAIN = "updateUI";
-
     boolean mBound = false;
 
     @Override
@@ -88,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         anhXa();
         toolbar();
         musicPlay();
+
+        a1 = AnimationUtils.loadAnimation(this, R.anim.music_rorate);
+        a2 = AnimationUtils.loadAnimation(this, R.anim.music_stop);
 
         playList_dao = new PlayList_Dao(this);
         checkListMusic = new ArrayList<>();
@@ -169,11 +171,8 @@ public class MainActivity extends AppCompatActivity {
             // không được cấp quyền thì hiện dialog hỏi
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("App chưa được cấp quyền, vui lòng cấp quyền truy cập vào bộ nhớ");
-            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+            builder.setNegativeButton("OK", (dialogInterface, i) -> {
 
-                }
             });
             builder.show();
         }
@@ -194,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_gioiThieu:
                     startActivity(new Intent(getBaseContext(), GioiThieu_Activity.class));
                     break;
-
             }
             return false;
         });
@@ -223,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Bạn chưa cấp quyền truy cập vào bộ nhớ", Toast.LENGTH_SHORT).show();
                     }
                     break;
-
             }
             return false;
         });
@@ -324,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
             playerMusicService.pause();
             if (playerMusicService.mediaPlayer.isPlaying()) {
                 img_play_main.setImageResource(R.drawable.ic_pause);
+
             } else {
                 img_play_main.setImageResource(R.drawable.ic_play);
             }
@@ -338,22 +336,17 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
             ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-            DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(checkListMusic,R.layout.view_danh_sach_bai_hat);
+            DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(checkListMusic);
             lv_dialog_dangPhat.setAdapter(adapter);
 
             tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + checkListMusic.size() + ")");
 
-            lv_dialog_dangPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Music_Fragment.positionBaiHat = position;
-                    playerMusicService.play(checkListMusic.get(position), checkListMusic);
-
-                }
+            lv_dialog_dangPhat.setOnItemClickListener((parent, view2, position, id) -> {
+                Music_Fragment.positionBaiHat = position;
+                playerMusicService.play(checkListMusic.get(position), checkListMusic);
             });
 
             AlertDialog alertDialog = builder.show();
-
         });
     }
 
@@ -363,8 +356,7 @@ public class MainActivity extends AppCompatActivity {
         // danh sách những cột cần lấy dữ liệu
         String projection[] = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST};
         // con trỏ truy cập vào file nhạc
-        Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                projection, null, null, null);
+        Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, null, null, null);
 
         // vòng lặp sẽ dừng khi hết bản ghi
         while (cursor.moveToNext()) {
@@ -449,7 +441,9 @@ public class MainActivity extends AppCompatActivity {
     private class MyBroadcastUpdateUi extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            // thay doi bai hat
             int i = intent.getIntExtra("position", -1);
+            // thay doi nút
             int changePlay = intent.getIntExtra("btnPlay", -1);
             if (i != -1) {
                 // cập nhật trình phát
@@ -465,18 +459,22 @@ public class MainActivity extends AppCompatActivity {
                 tv_ngheSi_main.setText(music.getArtist());
                 img_play_main.setImageResource(R.drawable.ic_pause);
                 linear_music_main.setVisibility(View.VISIBLE);
+                img_logo_main.startAnimation(a1);
+
             } else if (changePlay != -1) {
                 // cập nhật nút play
                 if (changePlay == 0) {
                     img_play_main.setImageResource(R.drawable.ic_play);
+                    img_logo_main.startAnimation(a2);
                 } else {
                     img_play_main.setImageResource(R.drawable.ic_pause);
+                    img_logo_main.startAnimation(a1);
                 }
             } else if (i == -1) {
                 // nếu i =-1 thì có nghĩa là đã xóa hết bài hát
                 linear_music_main.setVisibility(View.GONE);
             }
         }
-
     }
+
 }

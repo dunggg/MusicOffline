@@ -72,7 +72,6 @@ public class NgheSi_Adapter extends BaseAdapter {
             }
         }.execute(ngheSiList.get(position));
 
-
         return view;
     }
 
@@ -94,7 +93,6 @@ public class NgheSi_Adapter extends BaseAdapter {
                 return;
             }
         }
-
         // đóng con trỏ
         cursor.close();
     }

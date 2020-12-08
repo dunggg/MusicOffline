@@ -31,8 +31,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_music_note" />
 
@@ -44,7 +45,6 @@
                     android:text="0 bài hát"
                     android:textColor="#000"
                     android:textSize="18dp" />
-
             </LinearLayout>
 
             <ListView

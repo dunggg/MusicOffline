@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_music"
+    android:orientation="vertical"
     tools:context=".manage.TimKiem_Activity">
 
     <LinearLayout
@@ -12,54 +13,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_timKiem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/img_back_timKiem"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_back" />
+            app:navigationIcon="@drawable/ic_back">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/SearchView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
                 android:background="@drawable/shapesearch"
-                app:queryHint="Tên bài hát, nghệ sĩ...." />
+                app:iconifiedByDefault="false"
+                app:queryBackground="@null"
+                app:queryHint="Tìm kiếm bài hát..." />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
-            <TextView
+            <ListView
+                android:id="@+id/lv_music_timKiem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Bài hát"
-                android:textColor="#ffffff"
-                android:textSize="18dp" />
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/lv_music_timKiem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -126,7 +126,6 @@ public class PlayList_Dao {
         String projection[] = {MediaStore.Audio.Playlists.Members.AUDIO_ID};
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Playlists.Members.getContentUri(
                 "external", Long.parseLong(idPlayList)), projection, MediaStore.Audio.Playlists.Members.AUDIO_ID + "=?", new String[]{idSong}, null);
-      int b = cursor.getCount();
         if (cursor.getCount() != 0) {
             return true;
         }

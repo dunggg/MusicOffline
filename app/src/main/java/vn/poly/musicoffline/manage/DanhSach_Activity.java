@@ -14,14 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.adapter.Music_PlayList_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
-import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class DanhSach_Activity extends AppCompatActivity {
@@ -50,18 +46,15 @@ public class DanhSach_Activity extends AppCompatActivity {
 
         tv_soLuong_danhSachPhat.setText(MainActivity.songPlayList.size() + " bài hát");
 
-        lv_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        lv_danhSachPhat.setOnItemClickListener((parent, view, position, id) -> {
 
-                // nếu đang random thì tắt đi
-                MainActivity.playerMusicService.checkRandom = false;
+            // nếu đang random thì tắt đi
+            MainActivity.playerMusicService.checkRandom = false;
 
-                MainActivity.checkListMusic = MainActivity.songPlayList;
-                Music_Fragment.positionBaiHat = position;
-                MainActivity.playerMusicService.play(MainActivity.songPlayList.get(position), MainActivity.songPlayList);
-                startActivity(new Intent(DanhSach_Activity.this, TrinhPhatNhac_Activity.class));
-            }
+            MainActivity.checkListMusic = MainActivity.songPlayList;
+            Music_Fragment.positionBaiHat = position;
+            MainActivity.playerMusicService.play(MainActivity.songPlayList.get(position), MainActivity.songPlayList);
+            startActivity(new Intent(DanhSach_Activity.this, TrinhPhatNhac_Activity.class));
         });
 
     }
@@ -94,7 +87,6 @@ public class DanhSach_Activity extends AppCompatActivity {
             }
             return false;
         });
-
     }
 
     @Override
@@ -114,4 +106,5 @@ public class DanhSach_Activity extends AppCompatActivity {
         tv_soLuong_danhSachPhat = findViewById(R.id.tv_soLuong_danhSachPhat);
         lv_danhSachPhat = findViewById(R.id.lv_danhSachPhat);
     }
+
 }

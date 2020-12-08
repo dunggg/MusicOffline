@@ -1,15 +1,12 @@
 package vn.poly.musicoffline.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,7 +15,6 @@ import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
-import vn.poly.musicoffline.adapter.Music_Adapter;
 import vn.poly.musicoffline.adapter.Music_UaThich_Adapter;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.sql.Favorite_Dao;
@@ -46,9 +42,7 @@ public class UaThich_Fragment extends Fragment {
         //list
         musicList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(getContext());
-
         musicList = favorite_dao.getAllSongInFavorite();
-
 
         Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList, getContext());
         lv_uaThich.setAdapter(adapter);
@@ -64,4 +58,5 @@ public class UaThich_Fragment extends Fragment {
 
         return view;
     }
+
 }

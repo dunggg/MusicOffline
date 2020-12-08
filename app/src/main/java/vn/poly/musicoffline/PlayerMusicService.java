@@ -197,7 +197,6 @@ public class PlayerMusicService extends Service {
         // gán notification vào service
         // Notification ID cannot be 0.
         startForeground(8, customNotification);
-
     }
 
     // hàm khởi tạo pendingIntent broadcast

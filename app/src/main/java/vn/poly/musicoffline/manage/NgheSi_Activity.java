@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import vn.poly.musicoffline.adapter.Music_NgheSi_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.MainActivity;
@@ -63,7 +62,6 @@ public class NgheSi_Activity extends AppCompatActivity {
         });
 
         tv_soLuong_ngheSi.setText(musicList.size() + " bài hát");
-
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm

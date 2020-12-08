@@ -21,7 +21,6 @@ public class Chao_Activity extends AppCompatActivity {
 
         // yêu cầu cấp quyền truy cập vào bộ nhớ
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXTERNAL_STORAGE);
-
     }
 
     // lắng nghe quyền được cấp
@@ -38,11 +37,11 @@ public class Chao_Activity extends AppCompatActivity {
                         finish();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-
                     }
                 }
             });
             thread.start();
         }
     }
+
 }

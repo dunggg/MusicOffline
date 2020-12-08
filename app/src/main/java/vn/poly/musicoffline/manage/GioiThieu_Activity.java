@@ -17,7 +17,6 @@ public class GioiThieu_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gioi_thieu_);
         toolbar_gioiThieu();
-
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm

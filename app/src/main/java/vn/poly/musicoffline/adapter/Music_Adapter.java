@@ -118,23 +118,20 @@ public class Music_Adapter extends BaseAdapter {
                         tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
                         // nhấn vào playlist để thêm bài hát
-                        lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                                // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
-                                if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
-                                    playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
+                        lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view22, i, id) -> {
+                            // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+                            if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
+                                playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
 
-                                    // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
-                                    if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
-                                        MainActivity.songPlayList.add(music);
-                                    }
-                                    Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
-                                    dialog.cancel();
-
-                                } else {
-                                    Toast.makeText(context, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                                // nếu danh sách đang phát bằng danh sách hiện tại vừa thêm vào
+                                if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                                    MainActivity.songPlayList.add(music);
                                 }
+                                Toast.makeText(context, "Thêm bài hát " + music.getTitle() + " vào danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+
+                            } else {
+                                Toast.makeText(context, "Bài hát " + music.getTitle() + " đã tồn tại trong danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.show();
@@ -196,11 +193,10 @@ public class Music_Adapter extends BaseAdapter {
                                 }
                             }
 
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Xóa bài hát " + music.getTitle(), Toast.LENGTH_SHORT).show();
                             alertDialog2.dismiss();
                         });
                         break;
-
                 }
                 return false;
             });

@@ -30,15 +30,9 @@ public class Favorite_Dao {
     // lấy tất cả bài hát trong yêu thích
     public List<Music> getAllSongInFavorite() {
         List<Music> musicList = new ArrayList<>();
-        String projection[] = {
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST
-        };
+        String projection[] = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST};
 
-        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                projection, MediaStore.Audio.Media.IS_MUSIC + "=?", new String[]{"2"}, null);
+        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, MediaStore.Audio.Media.IS_MUSIC + "=?", new String[]{"2"}, null);
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
             String uri = cursor.getString(1);

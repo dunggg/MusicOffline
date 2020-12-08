@@ -45,7 +45,6 @@
                 android:text="Nghệ sĩ"
                 android:textColor="#5a5e63"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +84,5 @@
                 android:src="@drawable/ic_close2" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

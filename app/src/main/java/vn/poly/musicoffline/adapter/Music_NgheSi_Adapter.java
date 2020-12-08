@@ -123,14 +123,13 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                                 if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
                                     MainActivity.songPlayList.add(music);
                                 }
-                                Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Thêm bài hát " + music.getTitle() + " vào danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
                                 dialog.cancel();
 
                             } else {
-                                Toast.makeText(context, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Bài hát " + music.getTitle() + " đã tồn tại trong danh sách " + playLists.get(i).getName(), Toast.LENGTH_SHORT).show();
                             }
                         });
-
                         dialog.show();
                         break;
                 }
@@ -153,4 +152,5 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
         }
         return null;
     }
+
 }

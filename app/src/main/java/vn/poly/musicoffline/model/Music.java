@@ -24,10 +24,6 @@ public class Music {
         return idMemberPlayList;
     }
 
-    public void setIdMemberPlayList(String idMemberPlayList) {
-        this.idMemberPlayList = idMemberPlayList;
-    }
-
     public String getId() {
         return id;
     }

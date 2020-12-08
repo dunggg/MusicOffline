@@ -1,9 +1,9 @@
 package vn.poly.musicoffline.adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -74,26 +74,29 @@ public class DanhSach_Adapter extends BaseAdapter {
 
                         AlertDialog alertDialog = builder.show();
 
-                        tv_dialog_title_folder.setText("Sửa danh sách phát " + playList.getName());
+                        tv_dialog_title_folder.setText("Sửa danh sách " + playList.getName());
+                        tv_dialog_add_folder.setText("Sửa");
+
                         tv_dialog_add_folder.setOnClickListener(view23 -> {
                             // sửa danh sách
                             String name = txt_dialog_name_folder.getText().toString().trim();
-                            if (playList_dao.checkNamePlayList(name) && !name.equals("")||name.equals(playList.getName())) {
+                            if (playList_dao.checkNamePlayList(name) && !name.equals("") || name.equals(playList.getName())) {
                                 playList.setName(name);
                                 playList_dao.updatePlayList(playList.getId(), name);
                                 notifyDataSetChanged();
+                                Toast.makeText(context, "Sửa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
                                 alertDialog.cancel();
-                                Toast.makeText(context, "Sửa  danh sách thành công", Toast.LENGTH_SHORT).show();
+
                             } else if (name.isEmpty()) {
                                 txt_dialog_name_folder.setError("Không được nhập trống");
                                 return;
+
                             } else {
                                 txt_dialog_name_folder.setError("Danh sách " + name + " đã tồn tại");
                             }
                         });
 
                         tv_dialog_cancel_folder.setOnClickListener(view22 -> alertDialog.cancel());
-
                         break;
 
                     case R.id.menu_delete_folder:
@@ -116,12 +119,10 @@ public class DanhSach_Adapter extends BaseAdapter {
                             playList_dao.deletePlayList(playList.getId());
                             playLists.remove(position);
                             notifyDataSetChanged();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Xóa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
                             alertDialog1.cancel();
                         });
-
                         break;
-
                 }
                 return false;
             });

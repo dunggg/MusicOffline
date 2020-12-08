@@ -7,9 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -146,11 +144,10 @@ public class Music_PlayList_Adapter extends BaseAdapter {
                                 }
                             }
 
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Xóa bài hát " + music.getTitle(), Toast.LENGTH_SHORT).show();
                             alertDialog2.dismiss();
                         });
                         break;
-
                 }
                 return false;
             });
@@ -171,4 +168,5 @@ public class Music_PlayList_Adapter extends BaseAdapter {
         }
         return null;
     }
+
 }

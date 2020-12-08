@@ -20,10 +20,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
     ImageView img_logo_trinhPhatNhac, img_uaThich_trinhPhatNhac, img_danhSachPhat_trinhPhatNhac, img_danhSachBaiHat_trinhPhatNhac,
             img_lapLai_trinhPhatNhac, img_quayLai_trinhPhatNhac, img_play_trinhPhatNhac, img_tiepTheo_trinhPhatNhac, img_random_trinhPhatNhac;
     SeekBar seekbar;
+    Animation a1, a2;
     Music music;
     final int REQUEST_CODE_ACTION_PICK = 123;
     List<Music> musicList = MainActivity.checkListMusic;
@@ -64,6 +66,13 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_trinh_phat_nhac_);
         anhXa();
         toolbar_trinhPhatNhac();
+
+        a1 = AnimationUtils.loadAnimation(this, R.anim.music_rorate);
+        a2 = AnimationUtils.loadAnimation(this, R.anim.music_stop);
+
+        if (MainActivity.playerMusicService.mediaPlayer.isPlaying()) {
+            img_logo_trinhPhatNhac.startAnimation(a1);
+        }
 
         playList_dao = new PlayList_Dao(this);
         favorite_dao = new Favorite_Dao(this);
@@ -152,7 +161,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             img_logo_trinhPhatNhac.setImageResource(R.drawable.ic_no_music);
         }
 
-        //set tên nghệ sĩ,tên bài hát, tổng thời gian,thoigianchay
+        //set tên nghệ sĩ,tên bài hát, tổng thời gian, thời gian chạy
         tv_ngheSi_trinhPhatNhac.setText(music.getArtist());
         tv_music_trinhPhatNhac.setText(music.getTitle());
         tv_tongThoiGian_trinhPhatNhac.setText(music.getDuration());
@@ -199,20 +208,17 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
     public void musicPlay() {
         // khi nhấn vào ưa thích
-        img_uaThich_trinhPhatNhac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (favorite_dao.searchSongFavorite(music.getId())) {
-                    // == true là đã nằm trong danh sách favorite
-                    //1 là xóa khỏi danh sách yêu thích
-                    favorite_dao.update(music.getId(), 1);
-                    img_uaThich_trinhPhatNhac.setImageResource(R.drawable.ic_favorite);
-                } else {
-                    // ngược lại chưa nằm trong danh sách
-                    // 2 là thêm vào danh sách yêu thích
-                    favorite_dao.update(music.getId(), 2);
-                    img_uaThich_trinhPhatNhac.setImageResource(R.drawable.ic_favorite_blue);
-                }
+        img_uaThich_trinhPhatNhac.setOnClickListener(view -> {
+            if (favorite_dao.searchSongFavorite(music.getId())) {
+                // == true là đã nằm trong danh sách favorite
+                //1 là xóa khỏi danh sách yêu thích
+                favorite_dao.update(music.getId(), 1);
+                img_uaThich_trinhPhatNhac.setImageResource(R.drawable.ic_favorite);
+            } else {
+                // ngược lại chưa nằm trong danh sách
+                // 2 là thêm vào danh sách yêu thích
+                favorite_dao.update(music.getId(), 2);
+                img_uaThich_trinhPhatNhac.setImageResource(R.drawable.ic_favorite_blue);
             }
         });
 
@@ -230,7 +236,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             }
             music = musicList.get(Music_Fragment.positionBaiHat);
             MainActivity.playerMusicService.play(music, musicList);
-
         });
 
         // nhấn vào quay lại
@@ -242,7 +247,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             }
             music = musicList.get(Music_Fragment.positionBaiHat);
             MainActivity.playerMusicService.play(music, musicList);
-
         });
 
         // nhấn vào lặp lại
@@ -292,17 +296,14 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
         ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-        DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(MainActivity.checkListMusic, R.layout.view_danh_sach_bai_hat);
+        DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(MainActivity.checkListMusic);
         lv_dialog_dangPhat.setAdapter(adapter);
 
         tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + MainActivity.checkListMusic.size() + ")");
 
-        lv_dialog_dangPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Music_Fragment.positionBaiHat = position;
-                MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(position), MainActivity.checkListMusic);
-            }
+        lv_dialog_dangPhat.setOnItemClickListener((parent, view2, position, id) -> {
+            Music_Fragment.positionBaiHat = position;
+            MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(position), MainActivity.checkListMusic);
         });
 
         AlertDialog alertDialog = builder.show();
@@ -327,24 +328,21 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
         tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
-        lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // khi nhấn vào thì thêm bài hát vào danh sách
-                // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
-                if (!playList_dao.checkSongInPlayList(playLists.get(position).getId(), music.getId())) {
-                    playList_dao.addTrackToPlaylist(TrinhPhatNhac_Activity.this, music.getId(), Long.parseLong(playLists.get(position).getId()));
+        lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view2, position, id) -> {
+            // khi nhấn vào thì thêm bài hát vào danh sách
+            // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+            if (!playList_dao.checkSongInPlayList(playLists.get(position).getId(), music.getId())) {
+                playList_dao.addTrackToPlaylist(TrinhPhatNhac_Activity.this, music.getId(), Long.parseLong(playLists.get(position).getId()));
 
-                    // nếu danh sách đang phát bằng danh sách hiện tại vừa thêm vào
-                    if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
-                        MainActivity.songPlayList.add(music);
-                    }
-                    Toast.makeText(TrinhPhatNhac_Activity.this, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
-                    dialog.cancel();
-
-                } else {
-                    Toast.makeText(TrinhPhatNhac_Activity.this, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                // nếu danh sách đang phát bằng danh sách hiện tại vừa thêm vào
+                if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                    MainActivity.songPlayList.add(music);
                 }
+                Toast.makeText(TrinhPhatNhac_Activity.this, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+
+            } else {
+                Toast.makeText(TrinhPhatNhac_Activity.this, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();
@@ -412,6 +410,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 tv_ngheSi_trinhPhatNhac.setText(music.getArtist());
                 tv_tongThoiGian_trinhPhatNhac.setText(convertDuration(MediaPlayer.create(context, Uri.parse(music.getUri())).getDuration()));
                 img_play_trinhPhatNhac.setImageResource(R.drawable.ic_pause2);
+                img_logo_trinhPhatNhac.startAnimation(a1);
 
                 // kiểm tra xem bài hát có nằm trong mục yêu thích không
                 if (favorite_dao.searchSongFavorite(music.getId())) {
@@ -423,8 +422,10 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             } else if (changePlay != -1) {
                 if (changePlay == 0) {
                     img_play_trinhPhatNhac.setImageResource(R.drawable.ic_play2);
+                    img_logo_trinhPhatNhac.startAnimation(a2);
                 } else {
                     img_play_trinhPhatNhac.setImageResource(R.drawable.ic_pause2);
+                    img_logo_trinhPhatNhac.startAnimation(a1);
                 }
             }
         }
