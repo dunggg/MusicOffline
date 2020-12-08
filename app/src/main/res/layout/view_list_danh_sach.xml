@@ -12,8 +12,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_view_listDanhSach"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/ic_no_music" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:maxLines="1"
             android:text="Danh sách"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
 
     </LinearLayout>
 </LinearLayout>
