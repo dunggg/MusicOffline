@@ -15,12 +15,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import vn.poly.musicoffline.adapter.Music_Adapter;
+
 import vn.poly.musicoffline.adapter.Music_NgheSi_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.MainActivity;
@@ -56,7 +55,6 @@ public class NgheSi_Activity extends AppCompatActivity {
 
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
-
             MainActivity.checkListMusic = musicList;
             Music_Fragment.positionBaiHat = position;
             MainActivity.playerMusicService.play(musicList.get(position), MainActivity.checkListMusic);
