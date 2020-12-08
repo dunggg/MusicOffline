@@ -338,15 +338,14 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
                     MainActivity.songPlayList.add(music);
                 }
-                Toast.makeText(TrinhPhatNhac_Activity.this, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Thêm bài hát " + music.getTitle() + " vào danh sách " + playLists.get(position).getName(), Toast.LENGTH_SHORT).show();
                 dialog.cancel();
 
             } else {
-                Toast.makeText(TrinhPhatNhac_Activity.this, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Bài hát " + music.getTitle() + " đã tồn tại trong danh sách " + playLists.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();
-
     }
 
     private Bitmap getImage(String uri) {
