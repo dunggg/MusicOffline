@@ -71,7 +71,6 @@ public class DanhSachBaiHat_Adapter extends BaseAdapter {
             }
         }.execute(music.getUri());
 
-
         return view;
     }
 

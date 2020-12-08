@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,18 +39,16 @@ public class Music_Fragment extends Fragment {
         lv_frag_music = view.findViewById(R.id.lv_frag_music);
 
         tv_soLuong_music.setText(MainActivity.listSong.size() + " bài hát");
-        // set customlistview vào listview
+
+        // set adapter vào listview
         musicAdapter = new Music_Adapter(MainActivity.listSong, getContext());
         lv_frag_music.setAdapter(musicAdapter);
 
-        lv_frag_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Music music = MainActivity.listSong.get(position);
-                positionBaiHat = position;
-                MainActivity.playerMusicService.play(music, MainActivity.listSong);
-                MainActivity.checkListMusic = MainActivity.listSong;
-            }
+        lv_frag_music.setOnItemClickListener((parent, view1, position, id) -> {
+            Music music = MainActivity.listSong.get(position);
+            positionBaiHat = position;
+            MainActivity.playerMusicService.play(music, MainActivity.listSong);
+            MainActivity.checkListMusic = MainActivity.listSong;
         });
 
         return view;
