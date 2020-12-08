@@ -57,6 +57,14 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
     List<PlayList> playLists;
 
+    // đơn vị là mili giây
+    private final long tenMinutes = 36000L;
+    private final long thirtyMinutes = 108000L;
+    private final long sixtyMinutes = 216000L;
+
+    Handler handler;
+    Runnable runnable;
+
     public static final String BROADCAST_ACTION_TRINHPHAT = "updateUITrinhPhat";
 
     @Override
@@ -68,6 +76,14 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
         playList_dao = new PlayList_Dao(this);
         favorite_dao = new Favorite_Dao(this);
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.playerMusicService.stop();
+            }
+        };
 
         // lấy ra bài hát hiện tại
         music = musicList.get(Music_Fragment.positionBaiHat);
@@ -151,6 +167,24 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                     AlertDialog alertDialog = builder.show();
 
                     tv_dialog_cancel_henGioNgu.setOnClickListener(view1 -> alertDialog.dismiss());
+
+                    tv_dialog_confirm_henGioNgu.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (rb_dialog_10p_henGioNgu.isChecked()) {
+                                musicOffTime(36000);
+                            } else if (rb_dialog_30p_henGioNgu.isChecked()) {
+                                musicOffTime(thirtyMinutes);
+                            } else if (rb_dialog_60p_henGioNgu.isChecked()) {
+                                musicOffTime(sixtyMinutes);
+                            } else {
+                                handler.removeCallbacks(runnable);
+                            }
+                            alertDialog.cancel();
+                        }
+
+                    });
 
                     break;
             }
@@ -291,7 +325,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
                 if (MainActivity.playerMusicService.checkLooping) {
                     // tắt lặp lại
-                    MainActivity.playerMusicService.mediaPlayer.setLooping(false);
+                    MainActivity.playerMusicService.checkLooping = false;
                     img_lapLai_trinhPhatNhac.setImageResource(R.drawable.ic_replay);
                 }
 
@@ -312,11 +346,18 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
         ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-        List<Music> music = new ArrayList<>();
-        DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(music);
+        DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(MainActivity.checkListMusic, R.layout.view_danh_sach_bai_hat);
         lv_dialog_dangPhat.setAdapter(adapter);
 
-        tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + music.size() + ")");
+        tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + MainActivity.checkListMusic.size() + ")");
+
+        lv_dialog_dangPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Music_Fragment.positionBaiHat = position;
+                MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(position), MainActivity.checkListMusic);
+            }
+        });
 
         AlertDialog alertDialog = builder.show();
     }
@@ -362,6 +403,10 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         });
         dialog.show();
 
+    }
+
+    private void musicOffTime(long milliseconds) {
+        handler.postDelayed(runnable, milliseconds);
     }
 
     private Bitmap getImage(String uri) {

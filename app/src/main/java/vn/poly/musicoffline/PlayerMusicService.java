@@ -84,6 +84,9 @@ public class PlayerMusicService extends Service {
             stopForeground(STOP_FOREGROUND_REMOVE);
         }
 
+        // ẩn trình phát mini
+        putBroadCastUpdateUi(getApplicationContext(), -1, MainActivity.BROADCAST_ACTION_MAIN);
+
     }
 
     public int getCurrentPosition() {

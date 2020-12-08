@@ -18,9 +18,11 @@ import vn.poly.musicoffline.model.Music;
 
 public class DanhSachBaiHat_Adapter extends BaseAdapter {
     List<Music> musicList;
+    int layout;
 
-    public DanhSachBaiHat_Adapter(List<Music> musicList) {
+    public DanhSachBaiHat_Adapter(List<Music> musicList, int layout) {
         this.musicList = musicList;
+        this.layout = layout;
     }
 
     @Override
@@ -40,10 +42,9 @@ public class DanhSachBaiHat_Adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_danh_sach_bai_hat, null);
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, null);
 
         ImageView img_view_danhSach = view.findViewById(R.id.img_view_danhSach);
-        ImageView img_view_delete_danhSach = view.findViewById(R.id.img_view_delete_danhSach);
         TextView tv_view_music_danhSach = view.findViewById(R.id.tv_view_music_danhSach);
         TextView tv_view_ngheSi_danhSach = view.findViewById(R.id.tv_view_ngheSi_danhSach);
 
@@ -70,12 +71,6 @@ public class DanhSachBaiHat_Adapter extends BaseAdapter {
             }
         }.execute(music.getUri());
 
-        img_view_delete_danhSach.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //code
-            }
-        });
 
         return view;
     }

@@ -49,11 +49,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_view_delete_danhSach"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_close" />
 
     </LinearLayout>
 </LinearLayout>

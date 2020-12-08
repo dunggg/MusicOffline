@@ -146,64 +146,7 @@ public class Music_UaThich_Adapter extends BaseAdapter {
                                 break;
 
                             case R.id.menu_delete_music:
-                                // hiển thị dialog xóa
-                                AlertDialog.Builder builder2 = new AlertDialog.Builder(viewGroup.getContext());
-                                View view2 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dialog_delete, null);
-                                builder2.setCancelable(false);
-                                builder2.setView(view2);
 
-                                TextView tv_dialog_title_delete = view2.findViewById(R.id.tv_dialog_title_delete);
-                                TextView tv_dialog_delete = view2.findViewById(R.id.tv_dialog_delete);
-                                TextView tv_dialog_cancel = view2.findViewById(R.id.tv_dialog_cancel);
-
-                                tv_dialog_title_delete.setText("Xóa bài hát: " + music.getTitle());
-
-                                final AlertDialog alertDialog2 = builder2.show();
-
-                                tv_dialog_cancel.setOnClickListener(view3 -> alertDialog2.dismiss());
-
-                                tv_dialog_delete.setOnClickListener(view32 -> {
-
-                                    String idBaiHat = music.getId();
-                                    String idBaiHatDangPhat = MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat).getId();
-
-                                    // xóa bài hát theo id bài hát
-                                    context.getContentResolver().delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "_id=" + music.getId(), null);
-                                    musicList.remove(position);
-                                    notifyDataSetChanged();
-                                    // nếu id bài hát muốn xóa và bài hát đang phát trùng nhau
-                                    // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
-                                    if (idBaiHat.equals(idBaiHatDangPhat)) {
-
-                                        if (musicList.equals(MainActivity.checkListMusic) == false) {
-                                            MainActivity.checkListMusic.remove(Music_Fragment.positionBaiHat);
-                                        }
-
-                                        if (Music_Fragment.positionBaiHat == MainActivity.checkListMusic.size()) {
-                                            // nếu là vị trí cuối cùng
-                                            // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
-                                            if (MainActivity.checkListMusic.size() == 0) {
-                                                // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
-                                                MainActivity.playerMusicService.stop();
-                                                MainActivity.playerMusicService.clearData();
-                                                MainActivity.playerMusicService.hideNotification();
-                                                Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
-                                                intent.putExtra("position", -1);
-                                                context.sendBroadcast(intent);
-                                            } else {
-                                                // nếu sau khi xóa vẫn còn nhạc
-                                                Music_Fragment.positionBaiHat = 0;
-                                                MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(0), MainActivity.checkListMusic);
-                                            }
-                                        } else {
-                                            // nếu không phải vị trí cuối cùng
-                                            MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat), MainActivity.checkListMusic);
-                                        }
-                                    }
-
-                                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                    alertDialog2.dismiss();
-                                });
                                 break;
 
                         }

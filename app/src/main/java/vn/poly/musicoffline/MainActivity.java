@@ -32,6 +32,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -343,17 +344,20 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
             ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-//            List<PlayList> playLists = new ArrayList<>();
-//            playLists = playList_dao.getAllPlayList();
-//
-//            List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(MainActivity.this, playLists);
-//            lv_dialog_dangPhat.setAdapter(arrayAdapter);
 
-            List<Music> music = new ArrayList<>();
-            DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(music);
+            DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(checkListMusic,R.layout.view_danh_sach_bai_hat);
             lv_dialog_dangPhat.setAdapter(adapter);
 
-            tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + music.size() + ")");
+            tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + checkListMusic.size() + ")");
+
+            lv_dialog_dangPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Music_Fragment.positionBaiHat = position;
+                    playerMusicService.play(checkListMusic.get(position), checkListMusic);
+
+                }
+            });
 
             AlertDialog alertDialog = builder.show();
 

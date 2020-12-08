@@ -23,6 +23,7 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:checked="true"
                 android:id="@+id/rb_dialog_10p_henGioNgu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
