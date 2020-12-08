@@ -11,7 +11,7 @@
         android:paddingBottom="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_view_delete_dangPhat"
+            android:id="@+id/img_view_danhSach"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_no_music" />
@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_view_music_delete_dangPhat"
+                android:id="@+id/tv_view_music_danhSach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -38,7 +38,7 @@
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/tv_view_ngheSi_delete_dangPhat"
+                android:id="@+id/tv_view_ngheSi_danhSach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,11 +50,10 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/tv_view_delete_dangPhat"
+            android:id="@+id/img_view_delete_danhSach"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_close" />
 
     </LinearLayout>
-
 </LinearLayout>

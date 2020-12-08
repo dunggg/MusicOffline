@@ -43,11 +43,9 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Số lượng"
+                android:text="0 bài hát"
                 android:textSize="13dp" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

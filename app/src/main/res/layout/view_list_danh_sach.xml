@@ -7,24 +7,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_test"
+            android:id="@+id/img_view_listDanhSach"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_no_music" />
 
         <TextView
-            android:id="@+id/tv_test"
+            android:id="@+id/tv_view_music_listDanhSach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center_vertical"
-            android:text="Tên"
+            android:maxLines="1"
+            android:text="Bài hát"
             android:textColor="#000"
             android:textSize="12dp" />
 
     </LinearLayout>
-
 </LinearLayout>

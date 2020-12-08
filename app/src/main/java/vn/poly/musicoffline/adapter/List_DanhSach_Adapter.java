@@ -13,11 +13,11 @@ import java.util.List;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.model.PlayList;
 
-public class DanhSach_Adapter_DiaLog extends BaseAdapter {
+public class List_DanhSach_Adapter extends BaseAdapter {
     private Context context;
     private List<PlayList> playLists;
 
-    public DanhSach_Adapter_DiaLog(Context context, List<PlayList> playLists) {
+    public List_DanhSach_Adapter(Context context, List<PlayList> playLists) {
         this.context = context;
         this.playLists = playLists;
     }
@@ -39,13 +39,13 @@ public class DanhSach_Adapter_DiaLog extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(R.layout.test_view, null);
+        view = LayoutInflater.from(context).inflate(R.layout.view_list_danh_sach, null);
 
-        TextView tv_test = view.findViewById(R.id.tv_test);
-        ImageView img_test = view.findViewById(R.id.img_test);
+        TextView tv_view_music_listDanhSach = view.findViewById(R.id.tv_view_music_listDanhSach);
+        ImageView img_view_listDanhSach = view.findViewById(R.id.img_view_listDanhSach);
 
-        tv_test.setText(playLists.get(i).getName());
-        img_test.setImageResource(R.drawable.ic_no_music);
+        tv_view_music_listDanhSach.setText(playLists.get(i).getName());
+        img_view_listDanhSach.setImageResource(R.drawable.ic_no_music);
 
         return view;
     }

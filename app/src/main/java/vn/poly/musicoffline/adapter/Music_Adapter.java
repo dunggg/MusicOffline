@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.MainActivity;
-import vn.poly.musicoffline.manage.DanhSach_Activity;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.model.PlayList;
@@ -106,13 +105,16 @@ public class Music_Adapter extends BaseAdapter {
                         builder.setView(viewa1);
 
                         ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
+                        TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
 
                         Dialog dialog = builder.create();
 
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
 
-                        DanhSach_Adapter_DiaLog arrayAdapter = new DanhSach_Adapter_DiaLog(context, playLists);
+                        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
+
+                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
                         lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
 
                         // nhấn vào playlist để thêm bài hát

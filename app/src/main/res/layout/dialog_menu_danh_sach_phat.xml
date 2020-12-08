@@ -11,6 +11,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tv_dialog_soLuong_danhSach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Danh sách phát của tôi"

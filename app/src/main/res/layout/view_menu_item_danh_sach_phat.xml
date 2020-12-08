@@ -7,8 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_view_menu_item_danhSachPhat"
@@ -47,7 +46,5 @@
                 android:textSize="10dp" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

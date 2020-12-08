@@ -8,10 +8,8 @@ import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,7 +22,6 @@ import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
-import vn.poly.musicoffline.manage.DanhSach_Activity;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.PlayList_Dao;
@@ -110,7 +107,7 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
 
-                        DanhSach_Adapter_DiaLog arrayAdapter = new DanhSach_Adapter_DiaLog(context, playLists);
+                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
                         lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
 
                         // nhấn vào playlist để thêm bài hát

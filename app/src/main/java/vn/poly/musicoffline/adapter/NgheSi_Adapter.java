@@ -21,6 +21,8 @@ import java.util.List;
 public class NgheSi_Adapter extends BaseAdapter {
     private Context context;
     private List<String> ngheSiList;
+    Bitmap bitmap;
+    int soLuongBaiHat;
 
     public NgheSi_Adapter(Context context, List<String> ngheSiList) {
         this.context = context;
@@ -41,9 +43,6 @@ public class NgheSi_Adapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-
-    Bitmap bitmap;
-    int soLuongBaiHat;
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {

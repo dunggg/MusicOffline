@@ -35,11 +35,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import vn.poly.musicoffline.adapter.DanhSach_Adapter_DiaLog;
+import vn.poly.musicoffline.adapter.DanhSachBaiHat_Adapter;
 import vn.poly.musicoffline.adapter.ViewPager_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.manage.GioiThieu_Activity;
@@ -55,7 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class MainActivity extends AppCompatActivity {
@@ -343,21 +341,19 @@ public class MainActivity extends AppCompatActivity {
             builder.setView(view1);
 
             TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
-            ImageView img_dialog_deleteAll_dangPhat = view1.findViewById(R.id.img_dialog_deleteAll_dangPhat);
             ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-            List<PlayList> playLists = new ArrayList<>();
-            playLists = playList_dao.getAllPlayList();
+//            List<PlayList> playLists = new ArrayList<>();
+//            playLists = playList_dao.getAllPlayList();
+//
+//            List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(MainActivity.this, playLists);
+//            lv_dialog_dangPhat.setAdapter(arrayAdapter);
 
-            DanhSach_Adapter_DiaLog arrayAdapter = new DanhSach_Adapter_DiaLog(MainActivity.this, playLists);
-            lv_dialog_dangPhat.setAdapter(arrayAdapter);
+            List<Music> music = new ArrayList<>();
+            DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(music);
+            lv_dialog_dangPhat.setAdapter(adapter);
 
-            tv_dialog_soLuong_dangPhat.setText("Hiện đang phát (" + "" + ")");
-
-            img_dialog_deleteAll_dangPhat.setOnClickListener(view2 -> {
-                //code xóa
-
-            });
+            tv_dialog_soLuong_dangPhat.setText("Hiện đang phát " + "(" + music.size() + ")");
 
             AlertDialog alertDialog = builder.show();
 
