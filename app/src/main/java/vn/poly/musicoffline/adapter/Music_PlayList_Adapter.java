@@ -9,10 +9,12 @@ import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +61,7 @@ public class Music_PlayList_Adapter extends BaseAdapter {
         view = LayoutInflater.from(context).inflate(R.layout.view_music_playlist, null);
 
         ImageView img_view_music = view.findViewById(R.id.img_view_music_playlist);
-        ImageView img_view_delete_music = view.findViewById(R.id.img_view_delete_music_playlist);
+        ImageView img_view_more_music_playlist = view.findViewById(R.id.img_view_more_music_playlist);
         TextView tv_view_baiHat_music = view.findViewById(R.id.tv_view_baiHat_music_playlist);
         TextView tv_view_ngheSi_music = view.findViewById(R.id.tv_view_ngheSi_music_playlist);
         TextView tv_view_thoiGian_music = view.findViewById(R.id.tv_view_thoiGian_music_playlist);
@@ -88,63 +90,75 @@ public class Music_PlayList_Adapter extends BaseAdapter {
             }
         }.execute(music.getUri());
 
-        img_view_delete_music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //hiển thị dialog xóa
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
-                View view2 = LayoutInflater.from(context).inflate(R.layout.dialog_delete, null);
-                builder2.setCancelable(false);
-                builder2.setView(view2);
+        //khi nhấn vào img more
+        img_view_more_music_playlist.setOnClickListener(view1 -> {
+            // create popup menu
+            PopupMenu popupMenu = new PopupMenu(view1.getContext(), img_view_more_music_playlist);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_delete_music, popupMenu.getMenu());
+            // bắt sự kiện khi nhấn vào item ở menu
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_delete:
+                        //hiển thị dialog xóa
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                        View view2 = LayoutInflater.from(context).inflate(R.layout.dialog_delete, null);
+                        builder2.setCancelable(false);
+                        builder2.setView(view2);
 
-                TextView tv_dialog_title_delete = view2.findViewById(R.id.tv_dialog_title_delete);
-                TextView tv_dialog_delete = view2.findViewById(R.id.tv_dialog_delete);
-                TextView tv_dialog_cancel = view2.findViewById(R.id.tv_dialog_cancel);
+                        TextView tv_dialog_title_delete = view2.findViewById(R.id.tv_dialog_title_delete);
+                        TextView tv_dialog_delete = view2.findViewById(R.id.tv_dialog_delete);
+                        TextView tv_dialog_cancel = view2.findViewById(R.id.tv_dialog_cancel);
 
-                tv_dialog_title_delete.setText("Xóa bài hát: " + music.getTitle() + "khỏi list ?");
+                        tv_dialog_title_delete.setText("Xóa bài hát: " + music.getTitle() + " khỏi danh sách?");
 
-                final AlertDialog alertDialog2 = builder2.show();
+                        final AlertDialog alertDialog2 = builder2.show();
 
-                tv_dialog_cancel.setOnClickListener(view3 -> alertDialog2.dismiss());
+                        tv_dialog_cancel.setOnClickListener(view3 -> alertDialog2.dismiss());
 
-                tv_dialog_delete.setOnClickListener(view32 -> {
-                    playList_dao.deletSongInPlayList(musicList.get(position).getIdMemberPlayList(), idPlayList);
-                    musicList.remove(position);
-                    notifyDataSetChanged();
+                        tv_dialog_delete.setOnClickListener(view32 -> {
+                            playList_dao.deletSongInPlayList(musicList.get(position).getIdMemberPlayList(), idPlayList);
+                            musicList.remove(position);
+                            notifyDataSetChanged();
 
-                    // nếu vị trí của bát hát trc khi xóa bằng vị trí của bài hát trên thông báo thì thay đổi giao diện
-                    // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
-                    // nếu list này bằng với list hiện tại đang phát thì xóa mới chạy nhạc mới
-                    if (musicList.equals(MainActivity.checkListMusic)) {
-                        if (position == Music_Fragment.positionBaiHat) {
-                            if (position == musicList.size()) {
-                                // nếu là vị trí cuối cùng
-                                // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
-                                if (musicList.size() == 0) {
-                                    // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
-                                    MainActivity.playerMusicService.stop();
-                                    MainActivity.playerMusicService.clearData();
-                                    MainActivity.playerMusicService.hideNotification();
-                                    Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
-                                    intent.putExtra("position", -1);
-                                    context.sendBroadcast(intent);
-                                } else {
-                                    // nếu sau khi xóa vẫn còn nhạc
-                                    Music_Fragment.positionBaiHat = 0;
-                                    MainActivity.playerMusicService.play(musicList.get(0), musicList);
+                            // nếu vị trí của bát hát trc khi xóa bằng vị trí của bài hát trên thông báo thì thay đổi giao diện
+                            // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
+                            // nếu list này bằng với list hiện tại đang phát thì xóa mới chạy nhạc mới
+                            if (musicList.equals(MainActivity.checkListMusic)) {
+                                if (position == Music_Fragment.positionBaiHat) {
+                                    if (position == musicList.size()) {
+                                        // nếu là vị trí cuối cùng
+                                        // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
+                                        if (musicList.size() == 0) {
+                                            // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
+                                            MainActivity.playerMusicService.stop();
+                                            MainActivity.playerMusicService.clearData();
+                                            MainActivity.playerMusicService.hideNotification();
+                                            Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
+                                            intent.putExtra("position", -1);
+                                            context.sendBroadcast(intent);
+                                        } else {
+                                            // nếu sau khi xóa vẫn còn nhạc
+                                            Music_Fragment.positionBaiHat = 0;
+                                            MainActivity.playerMusicService.play(musicList.get(0), musicList);
+                                        }
+                                    } else {
+                                        // nếu không phải vị trí cuối cùng
+                                        MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
+                                    }
                                 }
-                            } else {
-                                // nếu không phải vị trí cuối cùng
-                                MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
                             }
-                        }
-                    }
 
-                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    alertDialog2.dismiss();
-                });
-            }
+                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            alertDialog2.dismiss();
+                        });
+                        break;
+
+                }
+                return false;
+            });
+            popupMenu.show();
         });
+
         return view;
     }
 

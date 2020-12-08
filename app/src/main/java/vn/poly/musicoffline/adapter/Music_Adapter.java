@@ -33,15 +33,13 @@ import java.util.List;
 
 public class Music_Adapter extends BaseAdapter {
     List<Music> musicList;
-    Context context;
-    int layout;
-    PlayList_Dao playList_dao;
     List<PlayList> playLists;
+    PlayList_Dao playList_dao;
+    Context context;
 
-    public Music_Adapter(List<Music> musicList, Context context, int layout) {
+    public Music_Adapter(List<Music> musicList, Context context) {
         this.musicList = musicList;
         this.context = context;
-        this.layout = layout;
         playList_dao = new PlayList_Dao(context);
     }
 
@@ -62,7 +60,7 @@ public class Music_Adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(layout, null);
+        view = LayoutInflater.from(context).inflate(R.layout.view_music, null);
 
         ImageView img_view_music = view.findViewById(R.id.img_view_music);
         ImageView img_view_more_music = view.findViewById(R.id.img_view_more_music);
@@ -101,7 +99,6 @@ public class Music_Adapter extends BaseAdapter {
             popupMenu.getMenuInflater().inflate(R.menu.menu_music, popupMenu.getMenu());
             // bắt sự kiện khi nhấn vào item ở menu
             popupMenu.setOnMenuItemClickListener(menuItem -> {
-                int i = position;
                 switch (menuItem.getItemId()) {
                     case R.id.menu_add_danhSachPhat:
                         AlertDialog.Builder builder = new AlertDialog.Builder(viewGroup.getContext());
@@ -121,8 +118,8 @@ public class Music_Adapter extends BaseAdapter {
                         // nhấn vào playlist để thêm bài hát
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                playList_dao.addTrackToPlaylist(context, musicList.get(i).getId(), Long.parseLong(playLists.get(position).getId()));
+                            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                                playList_dao.addTrackToPlaylist(context, musicList.get(position).getId(), Long.parseLong(playLists.get(position).getId()));
                                 DanhSach_Activity.musicList.add(music);
                                 Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
                                 dialog.cancel();
@@ -156,8 +153,7 @@ public class Music_Adapter extends BaseAdapter {
                             String idBaiHatDangPhat = MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat).getId();
 
                             // xóa bài hát theo id bài hát
-                            context.getContentResolver().delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                    "_id=" + music.getId(), null);
+                            context.getContentResolver().delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "_id=" + music.getId(), null);
                             musicList.remove(position);
                             notifyDataSetChanged();
                             // nếu id bài hát muốn xóa và bài hát đang phát trùng nhau

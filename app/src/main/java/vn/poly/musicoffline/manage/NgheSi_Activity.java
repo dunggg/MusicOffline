@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import vn.poly.musicoffline.adapter.Music_Adapter;
+import vn.poly.musicoffline.adapter.Music_NgheSi_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.model.Music;
@@ -33,7 +34,7 @@ import java.util.List;
 public class NgheSi_Activity extends AppCompatActivity {
     TextView tv_soLuong_ngheSi;
     ListView lv_ngheSi;
-    Music_Adapter musicAdapter;
+    Music_NgheSi_Adapter music_ngheSi_adapter;
     private List<Music> musicList;
     final int REQUEST_CODE_ACTION_PICK = 345;
 
@@ -48,15 +49,15 @@ public class NgheSi_Activity extends AppCompatActivity {
         String artist = intent.getStringExtra("artist");
         musicList = new ArrayList<>();
         musicList = getDataMusicArtist(artist);
-        musicAdapter = new Music_Adapter(musicList, this, R.layout.view_music_nghesi);
-        lv_ngheSi.setAdapter(musicAdapter);
+        music_ngheSi_adapter = new Music_NgheSi_Adapter(getBaseContext(),musicList);
+        lv_ngheSi.setAdapter(music_ngheSi_adapter);
 
         lv_ngheSi.setOnItemClickListener((parent, view, position, id) -> {
+
             MainActivity.checkListMusic = musicList;
             Music_Fragment.positionBaiHat = position;
-            Music music = musicList.get(position);
-            MainActivity.playerMusicService.play(music, MainActivity.checkListMusic);
-
+            MainActivity.playerMusicService.play(musicList.get(position), MainActivity.checkListMusic);
+            startActivity(new Intent(getBaseContext(), TrinhPhatNhac_Activity.class));
         });
 
     }
@@ -119,10 +120,7 @@ public class NgheSi_Activity extends AppCompatActivity {
         String selection = MediaStore.Audio.Media.ARTIST + "= '" + artist + "'";
         // danh sách các cột cần lấy
         String projection[] = {
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST
+                MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST
         };
         List<Music> musicList = new ArrayList<>();
         // con trỏ truy cập vào file nhạc

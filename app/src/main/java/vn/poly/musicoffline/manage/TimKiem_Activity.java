@@ -47,7 +47,7 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
         searchView.setOnQueryTextListener(this);
 
         listSearchMusic = new ArrayList<>();
-        music_adapter = new Music_Adapter(listSearchMusic, this, R.layout.view_music_nghesi);
+        music_adapter = new Music_Adapter(listSearchMusic, this);
         lv_music_timKiem.setAdapter(music_adapter);
 
         lv_music_timKiem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +61,6 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
         });
 
         img_back_timKiem.setOnClickListener(view -> startActivity(new Intent(getBaseContext(), MainActivity.class)));
-
 
     }
 

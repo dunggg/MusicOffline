@@ -51,7 +51,7 @@ public class Music_Fragment extends Fragment {
 
         tv_soLuong_music.setText(MainActivity.listSong.size() + " bài hát");
         // set customlistview vào listview
-        musicAdapter = new Music_Adapter(MainActivity.listSong, getContext(), R.layout.view_music);
+        musicAdapter = new Music_Adapter(MainActivity.listSong, getContext());
         lv_frag_music.setAdapter(musicAdapter);
 
         // ánh xạ đến các view bên activiy

@@ -72,14 +72,12 @@
                 android:textSize="13dp" />
 
             <ImageView
-                android:id="@+id/img_view_delete_music_playlist"
+                android:id="@+id/img_view_more_music_playlist"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_more_vert_black" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

@@ -43,7 +43,7 @@ public class UaThich_Fragment extends Fragment {
         favorite_dao = new Favorite_Dao(getContext());
 
         musicList = favorite_dao.getAllSongInFavorite();
-        Music_Adapter music_adapter = new Music_Adapter(musicList, getContext(), R.layout.view_music_nghesi);
+        Music_Adapter music_adapter = new Music_Adapter(musicList, getContext());
         lv_uaThich.setAdapter(music_adapter);
 
         tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
