@@ -54,16 +54,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
     PlayList_Dao playList_dao;
     Favorite_Dao favorite_dao;
-
     List<PlayList> playLists;
-
-    // đơn vị là mili giây
-    private final long tenMinutes = 36000L;
-    private final long thirtyMinutes = 108000L;
-    private final long sixtyMinutes = 216000L;
-
-    Handler handler;
-    Runnable runnable;
 
     public static final String BROADCAST_ACTION_TRINHPHAT = "updateUITrinhPhat";
 
@@ -76,14 +67,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
         playList_dao = new PlayList_Dao(this);
         favorite_dao = new Favorite_Dao(this);
-
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                MainActivity.playerMusicService.stop();
-            }
-        };
 
         // lấy ra bài hát hiện tại
         music = musicList.get(Music_Fragment.positionBaiHat);
@@ -149,43 +132,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                         intent.setType("audio/*");
                         startActivityForResult(intent, REQUEST_CODE_ACTION_PICK);
                     }
-                    break;
-
-                case R.id.menu_henGio_trinhPhatNhac:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    View view = LayoutInflater.from(this).inflate(R.layout.dialog_hen_gio_ngu, null);
-                    builder.setCancelable(false);
-                    builder.setView(view);
-
-                    RadioButton rb_dialog_10p_henGioNgu = view.findViewById(R.id.rb_dialog_10p_henGioNgu);
-                    RadioButton rb_dialog_30p_henGioNgu = view.findViewById(R.id.rb_dialog_30p_henGioNgu);
-                    RadioButton rb_dialog_60p_henGioNgu = view.findViewById(R.id.rb_dialog_60p_henGioNgu);
-                    RadioButton rb_dialog_tat_henGioNgu = view.findViewById(R.id.rb_dialog_tat_henGioNgu);
-                    TextView tv_dialog_confirm_henGioNgu = view.findViewById(R.id.tv_dialog_confirm_henGioNgu);
-                    TextView tv_dialog_cancel_henGioNgu = view.findViewById(R.id.tv_dialog_cancel_henGioNgu);
-
-                    AlertDialog alertDialog = builder.show();
-
-                    tv_dialog_cancel_henGioNgu.setOnClickListener(view1 -> alertDialog.dismiss());
-
-                    tv_dialog_confirm_henGioNgu.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (rb_dialog_10p_henGioNgu.isChecked()) {
-                                musicOffTime(36000);
-                            } else if (rb_dialog_30p_henGioNgu.isChecked()) {
-                                musicOffTime(thirtyMinutes);
-                            } else if (rb_dialog_60p_henGioNgu.isChecked()) {
-                                musicOffTime(sixtyMinutes);
-                            } else {
-                                handler.removeCallbacks(runnable);
-                            }
-                            alertDialog.cancel();
-                        }
-
-                    });
-
                     break;
             }
             return false;
@@ -403,10 +349,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         });
         dialog.show();
 
-    }
-
-    private void musicOffTime(long milliseconds) {
-        handler.postDelayed(runnable, milliseconds);
     }
 
     private Bitmap getImage(String uri) {

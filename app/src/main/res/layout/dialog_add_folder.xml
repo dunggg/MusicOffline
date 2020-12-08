@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="Đặt tên cho danh sách phát mới" />
+            android:hint="Đặt tên cho danh sách phát" />
 
         <LinearLayout
             android:layout_width="match_parent"

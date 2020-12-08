@@ -3,7 +3,4 @@
     <item
         android:id="@+id/menu_chiaSe_trinhPhatNhac"
         android:title="Chia sẻ" />
-    <item
-        android:id="@+id/menu_henGio_trinhPhatNhac"
-        android:title="Hẹn giờ ngủ" />
 </menu>

@@ -89,13 +89,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar();
         musicPlay();
 
-
         playList_dao = new PlayList_Dao(this);
         checkListMusic = new ArrayList<>();
         listSong = new ArrayList<>();
-
         songPlayList = new ArrayList<>();
-
 
         // nếu lần đầu vào app thì ẩn trình phát mini
         linear_music_main.setVisibility(View.GONE);
@@ -230,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-
     }
 
     // lấy ảnh từ đường dẫn uri
@@ -260,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
                 // khi viewpager selected
                 switch (position) {
                     case 0:
@@ -315,7 +310,6 @@ public class MainActivity extends AppCompatActivity {
         tv_ngheSi_main = findViewById(R.id.tv_ngheSi_main);
         viewPager = findViewById(R.id.viewpager_main);
         bottomNavigationView = findViewById(R.id.bottom_view);
-
     }
 
     //hàm xử lý khi click vào layout thì chuyển đến trình phát nhạc, phát nhạc, mở danh sách nhạc
@@ -344,7 +338,6 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_dialog_soLuong_dangPhat = view1.findViewById(R.id.tv_dialog_soLuong_dangPhat);
             ListView lv_dialog_dangPhat = view1.findViewById(R.id.lv_dialog_dangPhat);
 
-
             DanhSachBaiHat_Adapter adapter = new DanhSachBaiHat_Adapter(checkListMusic,R.layout.view_danh_sach_bai_hat);
             lv_dialog_dangPhat.setAdapter(adapter);
 
@@ -368,12 +361,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Music> getDataMusic() {
         List<Music> musicList = new ArrayList<>();
         // danh sách những cột cần lấy dữ liệu
-        String projection[] = {
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST
-        };
+        String projection[] = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST};
         // con trỏ truy cập vào file nhạc
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 projection, null, null, null);
@@ -458,9 +446,7 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(myBroadcastUpdateUi);
     }
 
-
     private class MyBroadcastUpdateUi extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             int i = intent.getIntExtra("position", -1);

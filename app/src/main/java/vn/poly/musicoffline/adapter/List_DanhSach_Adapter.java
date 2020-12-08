@@ -39,10 +39,10 @@ public class List_DanhSach_Adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.view_list_danh_sach, null);
 
-        TextView tv_view_music_listDanhSach = view.findViewById(R.id.tv_view_music_listDanhSach);
+        TextView tv_view_listDanhSach = view.findViewById(R.id.tv_view_listDanhSach);
         ImageView img_view_listDanhSach = view.findViewById(R.id.img_view_listDanhSach);
 
-        tv_view_music_listDanhSach.setText(playLists.get(i).getName());
+        tv_view_listDanhSach.setText(playLists.get(i).getName());
         img_view_listDanhSach.setImageResource(R.drawable.ic_no_music);
 
         return view;

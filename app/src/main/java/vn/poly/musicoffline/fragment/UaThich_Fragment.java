@@ -61,17 +61,15 @@ public class UaThich_Fragment extends Fragment {
                 super.onPostExecute(o);
                 Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList,getContext());
                 lv_uaThich.setAdapter(adapter);
+                tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
             }
         }.execute();
-
 
         lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
             MainActivity.checkListMusic = musicList;
             Music_Fragment.positionBaiHat = position;
             MainActivity.playerMusicService.play(musicList.get(position), musicList);
         });
-
-        tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
 
         return view;
     }
