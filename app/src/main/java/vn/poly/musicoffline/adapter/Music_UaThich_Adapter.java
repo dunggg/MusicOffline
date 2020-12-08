@@ -29,18 +29,22 @@ import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.model.PlayList;
+import vn.poly.musicoffline.sql.Favorite_Dao;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class Music_UaThich_Adapter extends BaseAdapter {
     List<Music> musicList;
+    Context context;
+
     List<PlayList> playLists;
     PlayList_Dao playList_dao;
-    Context context;
+    Favorite_Dao favorite_dao;
 
     public Music_UaThich_Adapter(List<Music> musicList, Context context) {
         this.musicList = musicList;
         this.context = context;
         playList_dao = new PlayList_Dao(context);
+        favorite_dao = new Favorite_Dao(context);
     }
 
     @Override
@@ -146,7 +150,9 @@ public class Music_UaThich_Adapter extends BaseAdapter {
                                 break;
 
                             case R.id.menu_delete_music:
-
+                                favorite_dao.update(music.getId(),1);
+                                musicList.remove(position);
+                                notifyDataSetChanged();
                                 break;
 
                         }

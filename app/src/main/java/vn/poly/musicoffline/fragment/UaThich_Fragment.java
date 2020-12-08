@@ -47,25 +47,16 @@ public class UaThich_Fragment extends Fragment {
         musicList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(getContext());
 
-        // truy vấn trong nền và đổ giao diện ra
-        AsyncTask asyncTask = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
+        musicList = favorite_dao.getAllSongInFavorite();
 
-                musicList = favorite_dao.getAllSongInFavorite();
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList,getContext());
-                lv_uaThich.setAdapter(adapter);
-                tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
-            }
-        }.execute();
+        Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList, getContext());
+        lv_uaThich.setAdapter(adapter);
+        tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
 
         lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
+            // nếu đang random thì tắt đi
+            MainActivity.playerMusicService.checkRandom = false;
             MainActivity.checkListMusic = musicList;
             Music_Fragment.positionBaiHat = position;
             MainActivity.playerMusicService.play(musicList.get(position), musicList);

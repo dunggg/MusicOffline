@@ -53,6 +53,9 @@ public class DanhSach_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                // nếu đang random thì tắt đi
+                MainActivity.playerMusicService.checkRandom = false;
+
                 MainActivity.checkListMusic = MainActivity.songPlayList;
                 Music_Fragment.positionBaiHat = position;
                 MainActivity.playerMusicService.play(MainActivity.songPlayList.get(position), MainActivity.songPlayList);
