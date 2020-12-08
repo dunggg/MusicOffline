@@ -2,6 +2,7 @@ package vn.poly.musicoffline.fragment;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,8 @@ public class DanhSach_Fragment extends Fragment {
     List<PlayList> playLists;
     PlayList_Dao playList_dao;
 
+    DanhSach_Adapter danhSach_adapter;
+
     Long idPlayList;
 
     public DanhSach_Fragment() {
@@ -51,18 +54,32 @@ public class DanhSach_Fragment extends Fragment {
         lv_frag_danhSach = view.findViewById(R.id.lv_frag_danhSach);
 
         playLists = new ArrayList<>();
-        playLists = playList_dao.getAllPlayList();
-        DanhSach_Adapter danhSach_adapter = new DanhSach_Adapter(playLists, getContext());
-        lv_frag_danhSach.setAdapter(danhSach_adapter);
 
-        if (playLists.size() != 0) {
-            // nếu đã có playlist
-            // id của playlist
-            idPlayList = Long.parseLong(playLists.get(playLists.size() - 1).getId());
-        } else {
-            // nếu chưa có playlist nào thì id  == 0
-            idPlayList = 999L;
-        }
+        // truy vấn trong background và đổ dữ lieeeju ra
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                playLists = playList_dao.getAllPlayList();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                danhSach_adapter = new DanhSach_Adapter(playLists, getContext());
+                lv_frag_danhSach.setAdapter(danhSach_adapter);
+
+                if (playLists.size() != 0) {
+                    // nếu đã có playlist
+                    // id của playlist
+                    idPlayList = Long.parseLong(playLists.get(playLists.size() - 1).getId());
+                } else {
+                    // nếu chưa có playlist nào thì id  == 0
+                    idPlayList = 999L;
+                }
+            }
+        }.execute();
+
 
         //chuyển tới danh sách
         lv_frag_danhSach.setOnItemClickListener(new AdapterView.OnItemClickListener() {

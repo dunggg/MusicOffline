@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     // list để kiểm tra xem đang phát ở phần nhạc nào
     public static List<Music> checkListMusic;
     public static List<Music> listSong;
+    public static List<Music> songPlayList;
     final int REQUEST_CODE_ACTION_PICK = 345;
 
     PlayList_Dao playList_dao;
@@ -89,11 +90,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar();
         musicPlay();
 
+
         playList_dao = new PlayList_Dao(this);
         checkListMusic = new ArrayList<>();
         listSong = new ArrayList<>();
 
-        // mặc định checklist sẽ có giá  trị của list bài hát
+        songPlayList = new ArrayList<>();
+
 
         // nếu lần đầu vào app thì ẩn trình phát mini
         linear_music_main.setVisibility(View.GONE);

@@ -120,9 +120,13 @@ public class Music_Adapter extends BaseAdapter {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                                 // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
-                                if (playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
+                                if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
                                     playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
-                                    DanhSach_Activity.musicList.add(music);
+
+                                    // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
+                                    if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                                        MainActivity.songPlayList.add(music);
+                                    }
                                     Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
                                     dialog.cancel();
 
@@ -164,7 +168,7 @@ public class Music_Adapter extends BaseAdapter {
                             // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
                             if (idBaiHat.equals(idBaiHatDangPhat)) {
 
-                                if (musicList.equals(MainActivity.checkListMusic)==false) {
+                                if (musicList.equals(MainActivity.checkListMusic) == false) {
                                     MainActivity.checkListMusic.remove(Music_Fragment.positionBaiHat);
                                 }
 

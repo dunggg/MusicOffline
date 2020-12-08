@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +20,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import vn.poly.musicoffline.adapter.DanhSach_Adapter_DiaLog;
 import vn.poly.musicoffline.fragment.Music_Fragment;
@@ -50,6 +53,8 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
 
     PlayList_Dao playList_dao;
     Favorite_Dao favorite_dao;
+
+    List<PlayList> playLists;
 
     public static final String BROADCAST_ACTION_TRINHPHAT = "updateUITrinhPhat";
 
@@ -283,7 +288,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 img_random_trinhPhatNhac.setImageResource(R.drawable.ic_random_blue);
                 // bật chế độ random thì phải tắt chế độ lặp lại
 
-                if (MainActivity.playerMusicService.checkLooping){
+                if (MainActivity.playerMusicService.checkLooping) {
                     // tắt lặp lại
                     MainActivity.playerMusicService.mediaPlayer.setLooping(false);
                     img_lapLai_trinhPhatNhac.setImageResource(R.drawable.ic_replay);
@@ -322,12 +327,33 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         builder.setView(view1);
 
         ListView lv_dialog_menu_danhSachPhat = view1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
-        List<PlayList> playLists = new ArrayList<>();
+        playLists = new ArrayList<>();
         playLists = playList_dao.getAllPlayList();
         DanhSach_Adapter_DiaLog arrayAdapter = new DanhSach_Adapter_DiaLog(TrinhPhatNhac_Activity.this, playLists);
         lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+        Dialog dialog = builder.create();
+        lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // khi nhấn vào thì thêm bài hát vào danh sách
+                // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+                if (!playList_dao.checkSongInPlayList(playLists.get(position).getId(), music.getId())) {
+                    playList_dao.addTrackToPlaylist(TrinhPhatNhac_Activity.this, music.getId(), Long.parseLong(playLists.get(position).getId()));
 
-        AlertDialog alertDialog = builder.show();
+                    // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
+                    if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                        MainActivity.songPlayList.add(music);
+                    }
+                    Toast.makeText(TrinhPhatNhac_Activity.this, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+
+                } else {
+                    Toast.makeText(TrinhPhatNhac_Activity.this, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialog.show();
+
     }
 
     private Bitmap getImage(String uri) {
@@ -379,7 +405,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             int i = intent.getIntExtra("position", -1);
             int changePlay = intent.getIntExtra("btnPlay", -1);
             if (i != -1) {
-                Music music = MainActivity.checkListMusic.get(i);
+                music = MainActivity.checkListMusic.get(i);
                 Bitmap bitmap = getImage(music.getUri());
                 // nếu bitmap khác null thì gán ảnh
                 if (bitmap != null) {

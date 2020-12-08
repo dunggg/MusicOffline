@@ -1,7 +1,9 @@
 package vn.poly.musicoffline.fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -44,16 +46,30 @@ public class UaThich_Fragment extends Fragment {
         musicList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(getContext());
 
-        musicList = favorite_dao.getAllSongInFavorite();
-        Music_Adapter music_adapter = new Music_Adapter(musicList, getContext());
-        lv_uaThich.setAdapter(music_adapter);
+        // truy vấn trong nền và đổ giao diện ra
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+
+                musicList = favorite_dao.getAllSongInFavorite();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                Music_Adapter music_adapter = new Music_Adapter(musicList, getContext());
+                lv_uaThich.setAdapter(music_adapter);
+            }
+        }.execute();
+
 
         lv_uaThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MainActivity.checkListMusic = musicList;
                 Music_Fragment.positionBaiHat = position;
-                MainActivity.playerMusicService.play(musicList.get(position),musicList);
+                MainActivity.playerMusicService.play(musicList.get(position), musicList);
             }
         });
 

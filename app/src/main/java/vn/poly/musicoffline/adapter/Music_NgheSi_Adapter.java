@@ -115,12 +115,20 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
 
                         // nhấn vào playlist để thêm bài hát
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view1, i, id) -> {
-                            playList_dao.addTrackToPlaylist(context, musicList.get(position).getId(), Long.parseLong(playLists.get(position).getId()));
-                            if (MainActivity.checkListMusic.equals(DanhSach_Activity.musicList)) {
-                                DanhSach_Activity.musicList.add(music);
+                            // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+                            if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
+                                playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
+
+                                // nếu danh sashc đang phát bằng danh sách hiện tại vừa thêm vào
+                                if (MainActivity.songPlayList.equals(MainActivity.checkListMusic)) {
+                                    MainActivity.songPlayList.add(music);
+                                }
+                                Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+
+                            } else {
+                                Toast.makeText(context, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
                         });
 
                         dialog.show();
