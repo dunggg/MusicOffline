@@ -119,15 +119,19 @@ public class Music_Adapter extends BaseAdapter {
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                                playList_dao.addTrackToPlaylist(context, musicList.get(position).getId(), Long.parseLong(playLists.get(position).getId()));
-                                DanhSach_Activity.musicList.add(music);
-                                Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
-                                dialog.cancel();
+                                // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
+                                if (playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
+                                    playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));
+                                    DanhSach_Activity.musicList.add(music);
+                                    Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+
+                                } else {
+                                    Toast.makeText(context, "Bài hát đã tồn tại trong danh sách", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
-
                         dialog.show();
-
                         break;
 
                     case R.id.menu_delete_music:

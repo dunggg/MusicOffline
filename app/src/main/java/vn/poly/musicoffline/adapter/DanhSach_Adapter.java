@@ -80,8 +80,6 @@ public class DanhSach_Adapter extends BaseAdapter {
                                 EditText txt_dialog_name_folder = view1.findViewById(R.id.txt_dialog_name_folder);
                                 TextView tv_dialog_add_folder = view1.findViewById(R.id.tv_dialog_add_folder);
                                 TextView tv_dialog_cancel_folder = view1.findViewById(R.id.tv_dialog_cancel_folder);
-                                EditText txt_dialog_id_folder = view1.findViewById(R.id.txt_dialog_id_folder);
-                                txt_dialog_id_folder.setVisibility(View.GONE);
 
                                 AlertDialog alertDialog = builder.show();
 

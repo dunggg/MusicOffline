@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     String tenBaiHat, ngheSi, uri;
                     int position;
 
-                    if (check == true) {
+                    if (check == true && listSong.size() != 0) {
                         // từ lần thứ 2 thì hiện trình phát
                         linear_music_main.setVisibility(View.VISIBLE);
                         tenBaiHat = sharedPreferences.getString("title", null);
@@ -137,14 +137,21 @@ public class MainActivity extends AppCompatActivity {
                         tv_music_main.setText(tenBaiHat);
                         tv_ngheSi_main.setText(ngheSi);
 
-                        // lấy ảnh từ uri đổi ra bitmap nếu bitmap khác null thì gán ảnh vào view
-                        Bitmap bitmap = getImage(uri);
-                        if (bitmap != null) {
-                            img_logo_main.setImageBitmap(bitmap);
-                        }
-                        playerMusicService.showNotification(new Music("", uri, tenBaiHat, ngheSi, ""));
-                    }
+                        try {
+                            // lấy ảnh từ uri đổi ra bitmap nếu bitmap khác null thì gán ảnh vào view
+                            Bitmap bitmap = getImage(uri);
+                            if (bitmap != null) {
+                                img_logo_main.setImageBitmap(bitmap);
+                            }
+                            playerMusicService.showNotification(new Music("", uri, tenBaiHat, ngheSi, ""));
 
+                        } catch (IllegalArgumentException ex) {
+                            // lỗi sử dụng tham số k hợp lệ
+                            // xảy ra khi bài hát đc lưu vào sharedPreferences mà bị xóa bài hát trong máy r nên k tìm đc uri
+                            linear_music_main.setVisibility(View.GONE);
+                            playerMusicService.clearData();
+                        }
+                    }
                     mBound = true;
                 }
 

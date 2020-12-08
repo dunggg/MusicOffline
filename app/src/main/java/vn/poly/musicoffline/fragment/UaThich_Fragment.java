@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.adapter.Music_Adapter;
 import vn.poly.musicoffline.model.Music;
@@ -45,6 +47,15 @@ public class UaThich_Fragment extends Fragment {
         musicList = favorite_dao.getAllSongInFavorite();
         Music_Adapter music_adapter = new Music_Adapter(musicList, getContext());
         lv_uaThich.setAdapter(music_adapter);
+
+        lv_uaThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.checkListMusic = musicList;
+                Music_Fragment.positionBaiHat = position;
+                MainActivity.playerMusicService.play(musicList.get(position),musicList);
+            }
+        });
 
         tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
 

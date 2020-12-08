@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,6 +32,8 @@ public class DanhSach_Fragment extends Fragment {
     ListView lv_frag_danhSach;
     List<PlayList> playLists;
     PlayList_Dao playList_dao;
+
+    Long idPlayList;
 
     public DanhSach_Fragment() {
         // Required empty public constructor
@@ -51,6 +54,15 @@ public class DanhSach_Fragment extends Fragment {
         playLists = playList_dao.getAllPlayList();
         DanhSach_Adapter danhSach_adapter = new DanhSach_Adapter(playLists, getContext());
         lv_frag_danhSach.setAdapter(danhSach_adapter);
+
+        if (playLists.size() != 0) {
+            // nếu đã có playlist
+            // id của playlist
+            idPlayList = Long.parseLong(playLists.get(playLists.size() - 1).getId());
+        } else {
+            // nếu chưa có playlist nào thì id  == 0
+            idPlayList = 999L;
+        }
 
         //chuyển tới danh sách
         lv_frag_danhSach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,7 +85,6 @@ public class DanhSach_Fragment extends Fragment {
 
                 TextView tv_dialog_title_folder = view1.findViewById(R.id.tv_dialog_title_folder);
                 EditText txt_dialog_name_folder = view1.findViewById(R.id.txt_dialog_name_folder);
-                EditText txt_dialog_id_folder = view1.findViewById(R.id.txt_dialog_id_folder);
                 TextView tv_dialog_add_folder = view1.findViewById(R.id.tv_dialog_add_folder);
                 TextView tv_dialog_cancel_folder = view1.findViewById(R.id.tv_dialog_cancel_folder);
 
@@ -84,12 +95,20 @@ public class DanhSach_Fragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String name = txt_dialog_name_folder.getText().toString().trim();
-                        String id = txt_dialog_id_folder.getText().toString().trim();
-                        playList_dao.insertPlayList(Long.parseLong(id), name);
-                        playLists.add(new PlayList(id, name));
-                        danhSach_adapter.notifyDataSetChanged();
-                        alertDialog.cancel();
-
+                        // kiểm tra tên đã tồn tại chưa == true là chưa tồn tại và không để trống
+                        if (playList_dao.checkNamePlayList(name) && !name.equals("")) {
+                            idPlayList++;
+                            playList_dao.insertPlayList(idPlayList, name);
+                            playLists.add(new PlayList(idPlayList.toString(), name));
+                            danhSach_adapter.notifyDataSetChanged();
+                            alertDialog.cancel();
+                            Toast.makeText(getContext(), "Thêm danh sách " + name + " thành công", Toast.LENGTH_SHORT).show();
+                        } else if (name.isEmpty()) {
+                            txt_dialog_name_folder.setError("Không được nhập trống");
+                            return;
+                        } else {
+                            txt_dialog_name_folder.setError("Danh sách " + name + " đã tồn tại");
+                        }
                     }
                 });
 

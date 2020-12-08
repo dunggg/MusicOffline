@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.model.PlayList;
 
@@ -32,7 +31,6 @@ public class PlayList_Dao {
                 MediaStore.Audio.Playlists.NAME
         };
         Cursor cursor = context.getContentResolver().query(EXTERNAL_CONTENT_URI, projection, null, null, null);
-        int b = cursor.getCount();
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
             String name = cursor.getString(1);
@@ -71,9 +69,7 @@ public class PlayList_Dao {
     public List<Music> getAllSongInPlayList(String idPlayList) {
         List<Music> musicList = new ArrayList<>();
         String projection[] = {
-                MediaStore.Audio.Playlists.Members.AUDIO_ID,
-                MediaStore.Audio.Playlists.Members._ID
-        };
+                MediaStore.Audio.Playlists.Members.AUDIO_ID, MediaStore.Audio.Playlists.Members._ID};
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Playlists.Members.getContentUri(
                 "external", Long.parseLong(idPlayList)), projection, null, null, null);
         String audio_id;
@@ -84,12 +80,7 @@ public class PlayList_Dao {
 
             // lấy bài hát trùng với bài hát đã lưu vào playlist
             // danh sách những cột cần lấy dữ liệu
-            String projection1[] = {
-                    MediaStore.Audio.Media._ID,
-                    MediaStore.Audio.Media.DATA,
-                    MediaStore.Audio.Media.TITLE,
-                    MediaStore.Audio.Media.ARTIST
-            };
+            String projection1[] = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST};
 
             // con trỏ truy cập vào file nhạc lấy bài hát theo audio id
             Cursor cursorMusic = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -130,6 +121,17 @@ public class PlayList_Dao {
         context.getContentResolver().update(EXTERNAL_CONTENT_URI, values, MediaStore.Audio.Playlists._ID + "=?", new String[]{idPlayList});
     }
 
+    // kiểm tra xem bài hát đã tồn tại trong playlist chưa
+    public boolean checkSongInPlayList(String idPlayList, String idSong) {
+        String projection[] = {MediaStore.Audio.Playlists.Members.AUDIO_ID};
+        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Playlists.Members.getContentUri(
+                "external", Long.parseLong(idPlayList)), projection, MediaStore.Audio.Playlists.Members.AUDIO_ID + "=?", new String[]{idSong}, null);
+        if (cursor.getCount() != 0) {
+            return true;
+        }
+        return false;
+    }
+
     // kiểm tra xem tên của playlist đã tồn tại hay chưa
     public boolean checkNamePlayList(String name) {
         Cursor cursor = context.getContentResolver().query(EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Playlists.NAME + "=?", new String[]{name}, null);
@@ -139,19 +141,6 @@ public class PlayList_Dao {
             return true;
         }
         // ngược lại return false
-        cursor.close();
-        return false;
-    }
-
-    // kiểm tra xem tên và id của playlist đã tồn tại hay chưa
-    public boolean checkPlayList(String name, String id) {
-        Cursor cursor = context.getContentResolver().query(EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Playlists.NAME + "=? or " + MediaStore.Audio.Playlists._ID + "=?", new String[]{name, id}, null);
-        if (cursor.getCount() == 0) {
-            // nếu mà tên và id chưa tồn tại return true
-            cursor.close();
-            return true;
-        }
-        // nếu tên hoặc id đã tồn tại return false
         cursor.close();
         return false;
     }

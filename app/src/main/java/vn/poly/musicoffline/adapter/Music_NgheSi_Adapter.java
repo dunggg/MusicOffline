@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.manage.DanhSach_Activity;
 import vn.poly.musicoffline.model.Music;
@@ -115,13 +116,14 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                         // nhấn vào playlist để thêm bài hát
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view1, i, id) -> {
                             playList_dao.addTrackToPlaylist(context, musicList.get(position).getId(), Long.parseLong(playLists.get(position).getId()));
-                            DanhSach_Activity.musicList.add(music);
+                            if (MainActivity.checkListMusic.equals(DanhSach_Activity.musicList)) {
+                                DanhSach_Activity.musicList.add(music);
+                            }
                             Toast.makeText(context, "Thêm vào danh sách thành công", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
                         });
 
                         dialog.show();
-
                         break;
                 }
                 return false;
