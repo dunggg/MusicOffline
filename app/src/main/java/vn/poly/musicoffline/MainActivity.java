@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
         musicPlay();
 
         playList_dao = new PlayList_Dao(this);
-
-
         checkListMusic = new ArrayList<>();
         listSong = new ArrayList<>();
 
