@@ -23,9 +23,7 @@ public class List_DanhSach_Adapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return playLists.size();
-    }
+    public int getCount() { return playLists.size(); }
 
     @Override
     public Object getItem(int i) {

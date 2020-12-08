@@ -107,13 +107,13 @@ public class Music_Adapter extends BaseAdapter {
                         ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
                         TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
 
-                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
-                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
-
                         Dialog dialog = builder.create();
 
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
+
+                        List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
+                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
 
                         tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 

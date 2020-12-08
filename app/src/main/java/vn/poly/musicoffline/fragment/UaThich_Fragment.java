@@ -19,6 +19,7 @@ import java.util.List;
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.adapter.Music_Adapter;
+import vn.poly.musicoffline.adapter.Music_UaThich_Adapter;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.sql.Favorite_Dao;
 
@@ -58,19 +59,16 @@ public class UaThich_Fragment extends Fragment {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                Music_Adapter music_adapter = new Music_Adapter(musicList, getContext());
-                lv_uaThich.setAdapter(music_adapter);
+                Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList,getContext());
+                lv_uaThich.setAdapter(adapter);
             }
         }.execute();
 
 
-        lv_uaThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.checkListMusic = musicList;
-                Music_Fragment.positionBaiHat = position;
-                MainActivity.playerMusicService.play(musicList.get(position), musicList);
-            }
+        lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
+            MainActivity.checkListMusic = musicList;
+            Music_Fragment.positionBaiHat = position;
+            MainActivity.playerMusicService.play(musicList.get(position), musicList);
         });
 
         tv_soLuong_uaThich.setText(musicList.size() + " bài hát");

@@ -44,7 +44,6 @@ public class Music_Fragment extends Fragment {
         musicAdapter = new Music_Adapter(MainActivity.listSong, getContext());
         lv_frag_music.setAdapter(musicAdapter);
 
-
         lv_frag_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

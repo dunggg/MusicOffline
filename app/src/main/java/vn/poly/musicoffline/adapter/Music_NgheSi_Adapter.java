@@ -108,10 +108,10 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
 
-                        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
-
                         List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
                         lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+
+                        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
                         // nhấn vào playlist để thêm bài hát
                         lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view1, i, id) -> {
