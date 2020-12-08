@@ -41,12 +41,10 @@ public class NgheSi_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nghe_si_);
-
         anhXa();
 
         Intent intent = getIntent();
         String artist = intent.getStringExtra("artist");
-
         toolbar_ngheSi(artist);
 
         musicList = new ArrayList<>();
@@ -69,9 +67,9 @@ public class NgheSi_Activity extends AppCompatActivity {
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm
-    public void toolbar_ngheSi(String titileToolbar) {
+    public void toolbar_ngheSi(String title) {
         Toolbar toolbar = findViewById(R.id.toolbar_ngheSi);
-        toolbar.setTitle(titileToolbar);
+        toolbar.setTitle(title);
         toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_more_vert));
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(getBaseContext(), MainActivity.class)));

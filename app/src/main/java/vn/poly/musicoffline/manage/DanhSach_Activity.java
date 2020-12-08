@@ -35,7 +35,6 @@ public class DanhSach_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach);
-
         anhXa();
 
         Intent intent = getIntent();
@@ -68,9 +67,9 @@ public class DanhSach_Activity extends AppCompatActivity {
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm
-    public void toolbar_danhSachPhat(String titleToolbar) {
+    public void toolbar_danhSachPhat(String title) {
         Toolbar toolbar = findViewById(R.id.toolbar_danhSachPhat);
-        toolbar.setTitle(titleToolbar);
+        toolbar.setTitle(title);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_more_vert));
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(getBaseContext(), MainActivity.class)));
