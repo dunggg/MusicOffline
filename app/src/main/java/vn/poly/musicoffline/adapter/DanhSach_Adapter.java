@@ -24,7 +24,7 @@ public class DanhSach_Adapter extends BaseAdapter {
     PlayList_Dao playList_dao;
     Context context;
 
-    public DanhSach_Adapter(List<PlayList> playLists,Context context) {
+    public DanhSach_Adapter(List<PlayList> playLists, Context context) {
         this.playLists = playLists;
         this.context = context;
         playList_dao = new PlayList_Dao(context);
@@ -92,7 +92,7 @@ public class DanhSach_Adapter extends BaseAdapter {
                                         // sửa danh sách
                                         String name = txt_dialog_name_folder.getText().toString().trim();
                                         playList.setName(name);
-                                        playList_dao.updatePlayList(playList.getId(),name);
+                                        playList_dao.updatePlayList(playList.getId(), name);
                                         notifyDataSetChanged();
                                         alertDialog.cancel();
                                     }

@@ -28,7 +28,7 @@ public class DanhSach_Activity extends AppCompatActivity {
     TextView tv_soLuong_danhSachPhat;
     ListView lv_danhSachPhat;
     PlayList_Dao playList_dao;
-   public static List<Music> musicList;
+    public static List<Music> musicList;
     Music_PlayList_Adapter music_playList_adapter;
     private final int REQUEST_CODE_ACTION_PICK = 345;
 
@@ -45,10 +45,10 @@ public class DanhSach_Activity extends AppCompatActivity {
         playList_dao = new PlayList_Dao(this);
         musicList = new ArrayList<>();
         musicList = playList_dao.getAllSongInPlayList(idPlaylist);
-        music_playList_adapter = new Music_PlayList_Adapter(this,musicList,idPlaylist);
+        music_playList_adapter = new Music_PlayList_Adapter(this, musicList, idPlaylist);
         lv_danhSachPhat.setAdapter(music_playList_adapter);
 
-        tv_soLuong_danhSachPhat.setText(musicList.size()+" bài hát");
+        tv_soLuong_danhSachPhat.setText(musicList.size() + " bài hát");
 
         lv_danhSachPhat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,8 +56,8 @@ public class DanhSach_Activity extends AppCompatActivity {
 
                 MainActivity.checkListMusic = musicList;
                 Music_Fragment.positionBaiHat = position;
-                MainActivity.playerMusicService.play(musicList.get(position),musicList);
-                startActivity(new Intent(DanhSach_Activity.this,TrinhPhatNhac_Activity.class));
+                MainActivity.playerMusicService.play(musicList.get(position), musicList);
+                startActivity(new Intent(DanhSach_Activity.this, TrinhPhatNhac_Activity.class));
             }
         });
 

@@ -283,7 +283,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 img_random_trinhPhatNhac.setImageResource(R.drawable.ic_random_blue);
                 // bật chế độ random thì phải tắt chế độ lặp lại
 
-                if (MainActivity.playerMusicService.checkLooping){
+                if (MainActivity.playerMusicService.checkLooping) {
                     // tắt lặp lại
                     MainActivity.playerMusicService.mediaPlayer.setLooping(false);
                     img_lapLai_trinhPhatNhac.setImageResource(R.drawable.ic_replay);

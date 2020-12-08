@@ -46,7 +46,7 @@ public class UaThich_Fragment extends Fragment {
         Music_Adapter music_adapter = new Music_Adapter(musicList, getContext(), R.layout.view_music_nghesi);
         lv_uaThich.setAdapter(music_adapter);
 
-        tv_soLuong_uaThich.setText(musicList.size()+" bài hát");
+        tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
 
         return view;
     }

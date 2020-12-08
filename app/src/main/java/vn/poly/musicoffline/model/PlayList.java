@@ -1,8 +1,7 @@
 package vn.poly.musicoffline.model;
 
-
 public class PlayList {
-    private String id,name;
+    private String id, name;
 
     public PlayList(String id, String name) {
         this.id = id;

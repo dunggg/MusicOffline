@@ -48,7 +48,7 @@ public class NgheSi_Activity extends AppCompatActivity {
         String artist = intent.getStringExtra("artist");
         musicList = new ArrayList<>();
         musicList = getDataMusicArtist(artist);
-        musicAdapter = new Music_Adapter(musicList, this,R.layout.view_music_nghesi);
+        musicAdapter = new Music_Adapter(musicList, this, R.layout.view_music_nghesi);
         lv_ngheSi.setAdapter(musicAdapter);
 
         lv_ngheSi.setOnItemClickListener((parent, view, position, id) -> {

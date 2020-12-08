@@ -37,7 +37,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                     Music_Fragment.positionBaiHat = musicList.size() - 1;
                 }
                 // truyền bài hát cần chạy
-                MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat),musicList);
+                MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
                 break;
 
             case R.id.img_notificationNext:
@@ -48,7 +48,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                     Music_Fragment.positionBaiHat = 0;
                 }
                 // truyền bài hát cần chạy
-                MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat),musicList);
+                MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
                 break;
 
             case R.id.img_notificationClose:

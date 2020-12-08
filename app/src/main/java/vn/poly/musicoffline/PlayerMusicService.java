@@ -54,9 +54,9 @@ public class PlayerMusicService extends Service {
     public void onCreate() {
         super.onCreate();
         // sharedPreferences dùng để lưu trữ data dưới dạng key-value trên file xml
-         sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);
         // ghi dữ liệu vào sharredPreferences
-         editor  = sharedPreferences.edit();
+        editor = sharedPreferences.edit();
     }
 
     @Nullable
@@ -135,8 +135,8 @@ public class PlayerMusicService extends Service {
         // để nút play về trạng thái nhạc đang chạy
         setImageButtonPlayNotification(R.drawable.ic_pause_black);
 
-        putBroadCastUpdateUi(getApplicationContext(),Music_Fragment.positionBaiHat,MainActivity.BROADCAST_ACTION_MAIN);
-        putBroadCastUpdateUi(getApplicationContext(),Music_Fragment.positionBaiHat,TrinhPhatNhac_Activity.BROADCAST_ACTION_TRINHPHAT);
+        putBroadCastUpdateUi(getApplicationContext(), Music_Fragment.positionBaiHat, MainActivity.BROADCAST_ACTION_MAIN);
+        putBroadCastUpdateUi(getApplicationContext(), Music_Fragment.positionBaiHat, TrinhPhatNhac_Activity.BROADCAST_ACTION_TRINHPHAT);
     }
 
     public void clearData() {
@@ -223,8 +223,8 @@ public class PlayerMusicService extends Service {
                 setImageButtonPlayNotification(R.drawable.ic_pause_black);
             }
         }
-        putPlayBroadCastUpdateUi(getApplicationContext(),checkUiPauseMini,MainActivity.BROADCAST_ACTION_MAIN);
-        putPlayBroadCastUpdateUi(getApplicationContext(),checkUiPauseMini,TrinhPhatNhac_Activity.BROADCAST_ACTION_TRINHPHAT);
+        putPlayBroadCastUpdateUi(getApplicationContext(), checkUiPauseMini, MainActivity.BROADCAST_ACTION_MAIN);
+        putPlayBroadCastUpdateUi(getApplicationContext(), checkUiPauseMini, TrinhPhatNhac_Activity.BROADCAST_ACTION_TRINHPHAT);
     }
 
     public void looping() {
@@ -309,16 +309,16 @@ public class PlayerMusicService extends Service {
     }
 
     // cập nhật lại nút play trình phát bên main thông qua broadcast
-    private void putPlayBroadCastUpdateUi(Context context,int changePlay,String action){
+    private void putPlayBroadCastUpdateUi(Context context, int changePlay, String action) {
         Intent intent = new Intent(action);
-        intent.putExtra("btnPlay",changePlay);
+        intent.putExtra("btnPlay", changePlay);
         context.sendBroadcast(intent);
     }
 
     // cập nhật lại trình phát bên main thông qua broadcast
-    private void putBroadCastUpdateUi(Context context,int position,String action){
+    private void putBroadCastUpdateUi(Context context, int position, String action) {
         Intent intent = new Intent(action);
-        intent.putExtra("position",position);
+        intent.putExtra("position", position);
         context.sendBroadcast(intent);
     }
 

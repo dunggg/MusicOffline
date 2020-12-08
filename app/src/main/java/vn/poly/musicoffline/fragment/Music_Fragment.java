@@ -49,7 +49,7 @@ public class Music_Fragment extends Fragment {
         tv_soLuong_music = view.findViewById(R.id.tv_soLuong_music);
         lv_frag_music = view.findViewById(R.id.lv_frag_music);
 
-        tv_soLuong_music.setText(MainActivity.listSong.size()+" bài hát");
+        tv_soLuong_music.setText(MainActivity.listSong.size() + " bài hát");
         // set customlistview vào listview
         musicAdapter = new Music_Adapter(MainActivity.listSong, getContext(), R.layout.view_music);
         lv_frag_music.setAdapter(musicAdapter);

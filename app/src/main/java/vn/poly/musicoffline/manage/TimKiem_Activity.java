@@ -39,7 +39,7 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
 
         anhXa();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(this, "Bạn phải cấp quyền truy cập vào bộ nhớ mới có thể sử dụng chức năng này", Toast.LENGTH_SHORT).show();
             searchView.setVisibility(View.GONE);
         }
@@ -55,7 +55,7 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MainActivity.checkListMusic = MainActivity.listSong;
                 Music_Fragment.positionBaiHat = searchPosition(listSearchMusic.get(position).getUri());
-                MainActivity.playerMusicService.play(listSearchMusic.get(position),MainActivity.listSong);
+                MainActivity.playerMusicService.play(listSearchMusic.get(position), MainActivity.listSong);
                 startActivity(new Intent(TimKiem_Activity.this, TrinhPhatNhac_Activity.class));
             }
         });
@@ -85,12 +85,12 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
-            filterMusic(newText);
-            if (listSearchMusic.size() == 0) {
-                frameLayout.setVisibility(View.GONE);
-            } else {
-                frameLayout.setVisibility(View.VISIBLE);
-            }
+        filterMusic(newText);
+        if (listSearchMusic.size() == 0) {
+            frameLayout.setVisibility(View.GONE);
+        } else {
+            frameLayout.setVisibility(View.VISIBLE);
+        }
 
         return false;
     }

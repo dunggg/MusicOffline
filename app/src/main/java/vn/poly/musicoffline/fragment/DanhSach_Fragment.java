@@ -49,15 +49,15 @@ public class DanhSach_Fragment extends Fragment {
 
         playLists = new ArrayList<>();
         playLists = playList_dao.getAllPlayList();
-        DanhSach_Adapter danhSach_adapter = new DanhSach_Adapter(playLists,getContext());
+        DanhSach_Adapter danhSach_adapter = new DanhSach_Adapter(playLists, getContext());
         lv_frag_danhSach.setAdapter(danhSach_adapter);
 
         //chuyển tới danh sách
         lv_frag_danhSach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(),DanhSach_Activity.class);
-                intent.putExtra("idPlayList",playLists.get(i).getId());
+                Intent intent = new Intent(getContext(), DanhSach_Activity.class);
+                intent.putExtra("idPlayList", playLists.get(i).getId());
                 startActivity(intent);
             }
         });
@@ -85,8 +85,8 @@ public class DanhSach_Fragment extends Fragment {
                     public void onClick(View view) {
                         String name = txt_dialog_name_folder.getText().toString().trim();
                         String id = txt_dialog_id_folder.getText().toString().trim();
-                        playList_dao.insertPlayList(Long.parseLong(id),name);
-                        playLists.add(new PlayList(id,name));
+                        playList_dao.insertPlayList(Long.parseLong(id), name);
+                        playLists.add(new PlayList(id, name));
                         danhSach_adapter.notifyDataSetChanged();
                         alertDialog.cancel();
 
