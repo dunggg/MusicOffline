@@ -49,16 +49,21 @@ public class NgheSi_Activity extends AppCompatActivity {
         String artist = intent.getStringExtra("artist");
         musicList = new ArrayList<>();
         musicList = getDataMusicArtist(artist);
-        music_ngheSi_adapter = new Music_NgheSi_Adapter(getBaseContext(),musicList);
+        music_ngheSi_adapter = new Music_NgheSi_Adapter(getBaseContext(), musicList);
         lv_ngheSi.setAdapter(music_ngheSi_adapter);
 
         lv_ngheSi.setOnItemClickListener((parent, view, position, id) -> {
+
+            // nếu đang random thì tắt đi
+            MainActivity.playerMusicService.checkRandom = false;
 
             MainActivity.checkListMusic = musicList;
             Music_Fragment.positionBaiHat = position;
             MainActivity.playerMusicService.play(musicList.get(position), MainActivity.checkListMusic);
             startActivity(new Intent(getBaseContext(), TrinhPhatNhac_Activity.class));
         });
+
+        tv_soLuong_ngheSi.setText(musicList.size() + " bài hát");
 
     }
 
