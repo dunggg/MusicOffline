@@ -87,6 +87,7 @@ public class DanhSach_Fragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(), DanhSach_Activity.class);
                 intent.putExtra("idPlayList", playLists.get(i).getId());
+                intent.putExtra("name",playLists.get(i).getName());
                 startActivity(intent);
             }
         });
