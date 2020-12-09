@@ -48,6 +48,8 @@ public class DanhSach_Activity extends AppCompatActivity {
 
         lv_danhSachPhat.setOnItemClickListener((parent, view, position, id) -> {
 
+            MainActivity.idPlayListDangPhat = idPlaylist;
+
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
 

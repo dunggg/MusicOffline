@@ -53,6 +53,8 @@ public class NgheSi_Activity extends AppCompatActivity {
 
         lv_ngheSi.setOnItemClickListener((parent, view, position, id) -> {
 
+            MainActivity.idPlayListDangPhat = "";
+
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
             MainActivity.checkListMusic = musicList;

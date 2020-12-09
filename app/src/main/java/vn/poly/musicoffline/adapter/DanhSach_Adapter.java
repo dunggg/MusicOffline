@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.PlayList_Dao;
@@ -115,11 +116,15 @@ public class DanhSach_Adapter extends BaseAdapter {
                         tv_dialog_cancel.setOnClickListener(view3 -> alertDialog1.cancel());
 
                         tv_dialog_delete.setOnClickListener(view32 -> {
-                            // xóa danh sách
-                            playList_dao.deletePlayList(playList.getId());
-                            playLists.remove(position);
-                            notifyDataSetChanged();
-                            Toast.makeText(context, "Xóa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
+                            if (MainActivity.idPlayListDangPhat.equals(playList.getId())) {
+                                Toast.makeText(context, "Danh sách đang phát không thể xóa", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // xóa danh sách
+                                playList_dao.deletePlayList(playList.getId());
+                                playLists.remove(position);
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "Xóa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
+                            }
                             alertDialog1.cancel();
                         });
                         break;

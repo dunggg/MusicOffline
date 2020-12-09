@@ -45,6 +45,7 @@ public class Music_Fragment extends Fragment {
         lv_frag_music.setAdapter(musicAdapter);
 
         lv_frag_music.setOnItemClickListener((parent, view1, position, id) -> {
+            MainActivity.idPlayListDangPhat = "";
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
             Music music = MainActivity.listSong.get(position);

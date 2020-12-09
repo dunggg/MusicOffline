@@ -3,6 +3,7 @@ package vn.poly.musicoffline.adapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
+import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.Favorite_Dao;
@@ -142,7 +144,36 @@ public class Music_UaThich_Adapter extends BaseAdapter {
                         favorite_dao.update(music.getId(), 1);
                         musicList.remove(position);
                         notifyDataSetChanged();
-                        break;
+
+                        // nếu vị trí của bát hát trc khi xóa bằng vị trí của bài hát trên thông báo thì thay đổi giao diện
+                        // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
+                        // nếu list này bằng với list hiện tại đang phát thì xóa mới chạy nhạc mới
+                        if (musicList.equals(MainActivity.checkListMusic)) {
+                            if (position == Music_Fragment.positionBaiHat) {
+                                if (position == musicList.size()) {
+                                    // nếu là vị trí cuối cùng
+                                    // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
+                                    if (musicList.size() == 0) {
+                                        // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
+                                        MainActivity.playerMusicService.stop();
+                                        MainActivity.playerMusicService.clearData();
+                                        MainActivity.playerMusicService.hideNotification();
+                                        Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
+                                        intent.putExtra("position", -1);
+                                        context.sendBroadcast(intent);
+                                    } else {
+                                        // nếu sau khi xóa vẫn còn nhạc
+                                        Music_Fragment.positionBaiHat = 0;
+                                        MainActivity.playerMusicService.play(musicList.get(0), musicList);
+                                    }
+                                } else {
+                                    // nếu không phải vị trí cuối cùng
+                                    MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
+                                }
+                            }
+                        }
+
+                            break;
                 }
                 return false;
             });

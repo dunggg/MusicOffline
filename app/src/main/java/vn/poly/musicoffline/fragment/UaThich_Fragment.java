@@ -49,6 +49,7 @@ public class UaThich_Fragment extends Fragment {
         tv_soLuong_uaThich.setText(MainActivity.favoriteList.size() + " bài hát");
 
         lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
+            MainActivity.idPlayListDangPhat = "";
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
             MainActivity.checkListMusic = MainActivity.favoriteList;
