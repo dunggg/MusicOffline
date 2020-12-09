@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import vn.poly.musicoffline.adapter.DanhSachBaiHat_Adapter;
+import vn.poly.musicoffline.adapter.Music_UaThich_Adapter;
 import vn.poly.musicoffline.adapter.ViewPager_Adapter;
 import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.manage.GioiThieu_Activity;
@@ -75,10 +76,13 @@ public class MainActivity extends AppCompatActivity {
     public static List<Music> checkListMusic;
     public static List<Music> listSong;
     public static List<Music> songPlayList;
+    public static List<Music> favoriteList;
+    public static Music_UaThich_Adapter music_uaThich_adapter;
     PlayList_Dao playList_dao;
     final int REQUEST_CODE_ACTION_PICK = 345;
     public static final String BROADCAST_ACTION_MAIN = "updateUI";
     boolean mBound = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

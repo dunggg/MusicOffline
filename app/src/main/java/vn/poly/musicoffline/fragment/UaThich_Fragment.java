@@ -23,7 +23,7 @@ public class UaThich_Fragment extends Fragment {
     TextView tv_soLuong_uaThich;
     ListView lv_uaThich;
     Favorite_Dao favorite_dao;
-    List<Music> musicList;
+
 
     public UaThich_Fragment() {
         // Required empty public constructor
@@ -40,23 +40,30 @@ public class UaThich_Fragment extends Fragment {
         lv_uaThich = view.findViewById(R.id.lv_uaThich);
 
         //list
-        musicList = new ArrayList<>();
+        MainActivity.favoriteList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(getContext());
-        musicList = favorite_dao.getAllSongInFavorite();
+        MainActivity.favoriteList = favorite_dao.getAllSongInFavorite();
 
-        Music_UaThich_Adapter adapter = new Music_UaThich_Adapter(musicList, getContext());
-        lv_uaThich.setAdapter(adapter);
-        tv_soLuong_uaThich.setText(musicList.size() + " bài hát");
+        MainActivity.music_uaThich_adapter = new Music_UaThich_Adapter(MainActivity.favoriteList, getContext());
+        lv_uaThich.setAdapter(MainActivity.music_uaThich_adapter);
+        tv_soLuong_uaThich.setText(MainActivity.favoriteList.size() + " bài hát");
 
         lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
-            MainActivity.checkListMusic = musicList;
+            MainActivity.checkListMusic = MainActivity.favoriteList;
             Music_Fragment.positionBaiHat = position;
-            MainActivity.playerMusicService.play(musicList.get(position), musicList);
+            MainActivity.playerMusicService.play(MainActivity.favoriteList.get(position), MainActivity.favoriteList);
         });
 
         return view;
     }
 
+    // kết thúc vòng đời của fragment
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        MainActivity.favoriteList = null;
+        MainActivity.music_uaThich_adapter = null;
+    }
 }

@@ -142,7 +142,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                     break;
 
                 case R.id.menu_ngheSi_trinhPhatNhac:
-
+                    startActivity(new Intent(TrinhPhatNhac_Activity.this, NgheSi_Activity.class).putExtra("artist", music.getArtist()));
                     break;
             }
             return false;
@@ -212,11 +212,23 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         // khi nhấn vào ưa thích
         img_uaThich_trinhPhatNhac.setOnClickListener(view -> {
             if (favorite_dao.searchSongFavorite(music.getId())) {
+                // xóa và cập nhật lại danh sách nếu list và adapter của ưa thích đã đc tạo
+                if (MainActivity.music_uaThich_adapter != null && MainActivity.favoriteList != null) {
+                    MainActivity.favoriteList.remove(music);
+                    MainActivity.music_uaThich_adapter.notifyDataSetChanged();
+                }
                 // == true là đã nằm trong danh sách favorite
                 //1 là xóa khỏi danh sách yêu thích
                 favorite_dao.update(music.getId(), 1);
                 img_uaThich_trinhPhatNhac.setImageResource(R.drawable.ic_favorite);
             } else {
+
+                // thêm và cập nhật lại danh sách nếu list và adapter của ưa thích đã đc tạo
+                if (MainActivity.music_uaThich_adapter != null && MainActivity.favoriteList != null) {
+                    MainActivity.favoriteList.add(music);
+                    MainActivity.music_uaThich_adapter.notifyDataSetChanged();
+                }
+
                 // ngược lại chưa nằm trong danh sách
                 // 2 là thêm vào danh sách yêu thích
                 favorite_dao.update(music.getId(), 2);
