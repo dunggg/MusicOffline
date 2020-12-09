@@ -124,13 +124,7 @@ public class Music_PlayList_Adapter extends BaseAdapter {
                                         // nếu là vị trí cuối cùng
                                         // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
                                         if (musicList.size() == 0) {
-//                                            // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
-//                                            MainActivity.playerMusicService.stop();
-//                                            MainActivity.playerMusicService.clearData();
-//                                            MainActivity.playerMusicService.hideNotification();
-//                                            Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
-//                                            intent.putExtra("position", -1);
-//                                            context.sendBroadcast(intent);
+
                                         } else {
                                             // nếu sau khi xóa vẫn còn nhạc
                                             Music_Fragment.positionBaiHat = 0;
