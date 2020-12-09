@@ -116,16 +116,16 @@ public class DanhSach_Adapter extends BaseAdapter {
                         tv_dialog_cancel.setOnClickListener(view3 -> alertDialog1.cancel());
 
                         tv_dialog_delete.setOnClickListener(view32 -> {
-                            if (MainActivity.idPlayListDangPhat.equals(playList.getId())) {
-                                Toast.makeText(context, "Danh sách " + playList.getName() + " không thể xóa khi đang phát bài hát trong danh sách", Toast.LENGTH_SHORT).show();
-
-                            } else {
+//                            if (MainActivity.idPlayListDangPhat.equals(playList.getId())) {
+//                                Toast.makeText(context, "Danh sách " + playList.getName() + " không thể xóa khi đang phát bài hát trong danh sách", Toast.LENGTH_SHORT).show();
+//
+//                            } else {
                                 // xóa danh sách
                                 playList_dao.deletePlayList(playList.getId());
                                 playLists.remove(position);
                                 notifyDataSetChanged();
                                 Toast.makeText(context, "Xóa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
-                            }
+//                            }
                             alertDialog1.cancel();
                         });
                         break;

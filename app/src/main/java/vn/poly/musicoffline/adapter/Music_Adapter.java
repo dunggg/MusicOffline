@@ -169,6 +169,10 @@ public class Music_Adapter extends BaseAdapter {
 
                                 if (musicList.equals(MainActivity.checkListMusic) == false) {
                                     MainActivity.checkListMusic.remove(Music_Fragment.positionBaiHat);
+                                    // đang phát trong danh sách mà xóa hết bài hát thì đc xóa danh sách
+//                                    if (MainActivity.checkListMusic.size()==0){
+//                                        MainActivity.idPlayListDangPhat = "";
+//                                    }
                                 }
 
                                 if (Music_Fragment.positionBaiHat == MainActivity.checkListMusic.size()) {
@@ -187,6 +191,7 @@ public class Music_Adapter extends BaseAdapter {
                                         Music_Fragment.positionBaiHat = 0;
                                         MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(0), MainActivity.checkListMusic);
                                     }
+
                                 } else {
                                     // nếu không phải vị trí cuối cùng
                                     MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat), MainActivity.checkListMusic);
