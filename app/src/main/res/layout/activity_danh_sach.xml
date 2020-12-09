@@ -19,41 +19,10 @@
             app:menu="@menu/menu_tim_kiem"
             app:navigationIcon="@drawable/ic_back" />
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/lv_danhSachPhat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_music_note" />
-
-                <TextView
-                    android:id="@+id/tv_soLuong_danhSachPhat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="0 bài hát"
-                    android:textColor="#000"
-                    android:textSize="18dp" />
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/lv_danhSachPhat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

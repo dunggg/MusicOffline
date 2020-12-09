@@ -54,7 +54,6 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
             MainActivity.playerMusicService.play(listSearchMusic.get(position), MainActivity.listSong);
             startActivity(new Intent(TimKiem_Activity.this, TrinhPhatNhac_Activity.class));
         });
-
     }
 
     // hàm toolbar

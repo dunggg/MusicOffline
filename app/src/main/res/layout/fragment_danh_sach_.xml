@@ -8,7 +8,8 @@
     tools:context=".fragment.DanhSach_Fragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/ln_add_danhSach"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
@@ -18,24 +19,16 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_menu_playlist_play" />
+            android:src="@drawable/ic_playlist_add" />
 
         <TextView
-            android:id="@+id/tv_soLuong_danhSach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="0 danh sách"
+            android:text="Thêm danh sách"
             android:textColor="#000"
             android:textSize="18dp" />
-
-        <ImageView
-            android:id="@+id/img_add_danhSach"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_playlist_add" />
     </LinearLayout>
 
     <ListView

@@ -21,7 +21,6 @@ import vn.poly.musicoffline.fragment.Music_Fragment;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class DanhSach_Activity extends AppCompatActivity {
-    TextView tv_soLuong_danhSachPhat;
     ListView lv_danhSachPhat;
     PlayList_Dao playList_dao;
     Music_PlayList_Adapter music_playList_adapter;
@@ -44,12 +43,9 @@ public class DanhSach_Activity extends AppCompatActivity {
         music_playList_adapter = new Music_PlayList_Adapter(this, MainActivity.songPlayList, idPlaylist);
         lv_danhSachPhat.setAdapter(music_playList_adapter);
 
-        tv_soLuong_danhSachPhat.setText(MainActivity.songPlayList.size() + " bài hát");
-
         lv_danhSachPhat.setOnItemClickListener((parent, view, position, id) -> {
 
             MainActivity.idPlayListDangPhat = idPlaylist;
-
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
 
@@ -58,7 +54,6 @@ public class DanhSach_Activity extends AppCompatActivity {
             MainActivity.playerMusicService.play(MainActivity.songPlayList.get(position), MainActivity.songPlayList);
             startActivity(new Intent(DanhSach_Activity.this, TrinhPhatNhac_Activity.class));
         });
-
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm
@@ -105,7 +100,6 @@ public class DanhSach_Activity extends AppCompatActivity {
 
     //ánh xạ
     public void anhXa() {
-        tv_soLuong_danhSachPhat = findViewById(R.id.tv_soLuong_danhSachPhat);
         lv_danhSachPhat = findViewById(R.id.lv_danhSachPhat);
     }
 

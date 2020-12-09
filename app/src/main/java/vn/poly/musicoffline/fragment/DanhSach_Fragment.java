@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,7 @@ import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class DanhSach_Fragment extends Fragment {
-    TextView tv_soLuong_danhSach;
-    ImageView img_add_danhSach;
+    LinearLayout ln_add_danhSach;
     ListView lv_frag_danhSach;
     List<PlayList> playLists;
     PlayList_Dao playList_dao;
@@ -45,8 +45,7 @@ public class DanhSach_Fragment extends Fragment {
 
         playList_dao = new PlayList_Dao(getContext());
         //ánh xạ
-        tv_soLuong_danhSach = view.findViewById(R.id.tv_soLuong_danhSach);
-        img_add_danhSach = view.findViewById(R.id.img_add_danhSach);
+        ln_add_danhSach = view.findViewById(R.id.ln_add_danhSach);
         lv_frag_danhSach = view.findViewById(R.id.lv_frag_danhSach);
 
         playLists = new ArrayList<>();
@@ -54,7 +53,6 @@ public class DanhSach_Fragment extends Fragment {
 
         danhSach_adapter = new DanhSach_Adapter(playLists, getContext());
         lv_frag_danhSach.setAdapter(danhSach_adapter);
-        tv_soLuong_danhSach.setText(playLists.size() + " danh sách");
 
         if (playLists.size() != 0) {
             // nếu đã có playlist
@@ -74,7 +72,7 @@ public class DanhSach_Fragment extends Fragment {
         });
 
         //tạo dannh sách mới
-        img_add_danhSach.setOnClickListener(view12 -> {
+        ln_add_danhSach.setOnClickListener(view12 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             View view1 = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_folder, null);
             builder.setCancelable(false);

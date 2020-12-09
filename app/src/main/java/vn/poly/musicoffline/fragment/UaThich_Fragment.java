@@ -20,10 +20,8 @@ import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.sql.Favorite_Dao;
 
 public class UaThich_Fragment extends Fragment {
-    TextView tv_soLuong_uaThich;
     ListView lv_uaThich;
     Favorite_Dao favorite_dao;
-
 
     public UaThich_Fragment() {
         // Required empty public constructor
@@ -36,7 +34,6 @@ public class UaThich_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ua_thich_, container, false);
 
         //ánh xạ
-        tv_soLuong_uaThich = view.findViewById(R.id.tv_soLuong_uaThich);
         lv_uaThich = view.findViewById(R.id.lv_uaThich);
 
         //list
@@ -46,7 +43,6 @@ public class UaThich_Fragment extends Fragment {
 
         MainActivity.music_uaThich_adapter = new Music_UaThich_Adapter(MainActivity.favoriteList, getContext());
         lv_uaThich.setAdapter(MainActivity.music_uaThich_adapter);
-        tv_soLuong_uaThich.setText(MainActivity.favoriteList.size() + " bài hát");
 
         lv_uaThich.setOnItemClickListener((parent, view1, position, id) -> {
             MainActivity.idPlayListDangPhat = "";
@@ -67,4 +63,5 @@ public class UaThich_Fragment extends Fragment {
         MainActivity.favoriteList = null;
         MainActivity.music_uaThich_adapter = null;
     }
+
 }

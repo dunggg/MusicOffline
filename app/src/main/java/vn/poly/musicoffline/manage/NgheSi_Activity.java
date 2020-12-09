@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NgheSi_Activity extends AppCompatActivity {
-    TextView tv_soLuong_ngheSi;
     ListView lv_ngheSi;
     Music_NgheSi_Adapter music_ngheSi_adapter;
     private List<Music> musicList;
@@ -62,8 +61,6 @@ public class NgheSi_Activity extends AppCompatActivity {
             MainActivity.playerMusicService.play(musicList.get(position), MainActivity.checkListMusic);
             startActivity(new Intent(getBaseContext(), TrinhPhatNhac_Activity.class));
         });
-
-        tv_soLuong_ngheSi.setText(musicList.size() + " bài hát");
     }
 
     // hàm toolbar xử lý chức năng quay lại và tìm kiếm
@@ -116,7 +113,6 @@ public class NgheSi_Activity extends AppCompatActivity {
 
     //ánh xạ
     public void anhXa() {
-        tv_soLuong_ngheSi = findViewById(R.id.tv_soLuong_ngheSi);
         lv_ngheSi = findViewById(R.id.lv_ngheSi);
     }
 

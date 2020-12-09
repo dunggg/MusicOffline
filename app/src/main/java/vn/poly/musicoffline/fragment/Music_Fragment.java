@@ -17,7 +17,6 @@ import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.R;
 
 public class Music_Fragment extends Fragment {
-    TextView tv_soLuong_music;
     ListView lv_frag_music;
     Music_Adapter musicAdapter;
 
@@ -35,10 +34,7 @@ public class Music_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_music_, container, false);
 
         //ánh xạ
-        tv_soLuong_music = view.findViewById(R.id.tv_soLuong_music);
         lv_frag_music = view.findViewById(R.id.lv_frag_music);
-
-        tv_soLuong_music.setText(MainActivity.listSong.size() + " bài hát");
 
         // set adapter vào listview
         musicAdapter = new Music_Adapter(MainActivity.listSong, getContext());

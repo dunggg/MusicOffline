@@ -117,7 +117,7 @@ public class DanhSach_Adapter extends BaseAdapter {
 
                         tv_dialog_delete.setOnClickListener(view32 -> {
                             if (MainActivity.idPlayListDangPhat.equals(playList.getId())) {
-                                Toast.makeText(context, "Danh sách đang phát không thể xóa", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Danh sách " + playList.getName() + " không thể xóa khi đang phát", Toast.LENGTH_SHORT).show();
                             } else {
                                 // xóa danh sách
                                 playList_dao.deletePlayList(playList.getId());
