@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     public static List<Music> songPlayList;
     public static List<Music> favoriteList;
     public static Music_UaThich_Adapter music_uaThich_adapter;
-//    public static String idPlayListDangPhat = "";
     PlayList_Dao playList_dao;
     final int REQUEST_CODE_ACTION_PICK = 345;
     public static final String BROADCAST_ACTION_MAIN = "updateUI";
@@ -101,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
         listSong = new ArrayList<>();
         songPlayList = new ArrayList<>();
 
-        // nếu lần đầu vào app thì ẩn trình phát mini
-        linear_music_main.setVisibility(View.GONE);
 
         // lấy dữ liệu từ sharedPreferences
         sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);
