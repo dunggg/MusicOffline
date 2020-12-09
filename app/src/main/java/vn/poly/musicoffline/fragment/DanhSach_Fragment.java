@@ -96,6 +96,7 @@ public class DanhSach_Fragment extends Fragment {
                     danhSach_adapter.notifyDataSetChanged();
                     alertDialog.cancel();
                     Toast.makeText(getContext(), "Thêm danh sách " + name, Toast.LENGTH_SHORT).show();
+
                 } else if (name.isEmpty()) {
                     txt_dialog_name_folder.setError("Không được nhập trống");
                     return;
