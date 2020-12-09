@@ -52,12 +52,10 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
     Music music;
     final int REQUEST_CODE_ACTION_PICK = 123;
     List<Music> musicList = MainActivity.checkListMusic;
-    MyBroadCastUpdateUiTrinhPhat myBroadCastUpdateUiTrinhPhat;
-
     PlayList_Dao playList_dao;
     Favorite_Dao favorite_dao;
     List<PlayList> playLists;
-
+    MyBroadCastUpdateUiTrinhPhat myBroadCastUpdateUiTrinhPhat;
     public static final String BROADCAST_ACTION_TRINHPHAT = "updateUITrinhPhat";
 
     @Override
@@ -141,6 +139,10 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                         intent.setType("audio/*");
                         startActivityForResult(intent, REQUEST_CODE_ACTION_PICK);
                     }
+                    break;
+
+                case R.id.menu_ngheSi_trinhPhatNhac:
+
                     break;
             }
             return false;
