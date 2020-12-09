@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.adapter.Music_PlayList_Adapter;
@@ -44,14 +46,12 @@ public class DanhSach_Activity extends AppCompatActivity {
         lv_danhSachPhat.setAdapter(music_playList_adapter);
 
         lv_danhSachPhat.setOnItemClickListener((parent, view, position, id) -> {
-
-//            MainActivity.idPlayListDangPhat = idPlaylist;
             // nếu đang random thì tắt đi
             MainActivity.playerMusicService.checkRandom = false;
 
             MainActivity.checkListMusic = MainActivity.songPlayList;
             Music_Fragment.positionBaiHat = position;
-            MainActivity.playerMusicService.play(MainActivity.songPlayList.get(position), MainActivity.songPlayList);
+            MainActivity.playerMusicService.play(MainActivity.checkListMusic.get(position), MainActivity.checkListMusic);
             startActivity(new Intent(DanhSach_Activity.this, TrinhPhatNhac_Activity.class));
         });
     }
