@@ -1,7 +1,6 @@
 package vn.poly.musicoffline.adapter;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.model.PlayList;
 import vn.poly.musicoffline.sql.PlayList_Dao;
@@ -126,6 +124,7 @@ public class DanhSach_Adapter extends BaseAdapter {
                                 notifyDataSetChanged();
                                 Toast.makeText(context, "Xóa danh sách " + playList.getName(), Toast.LENGTH_SHORT).show();
 //                            }
+
                             alertDialog1.cancel();
                         });
                         break;

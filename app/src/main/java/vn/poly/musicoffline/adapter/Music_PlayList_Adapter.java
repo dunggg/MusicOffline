@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Objects;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;

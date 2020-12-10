@@ -8,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import vn.poly.musicoffline.MainActivity;
 import vn.poly.musicoffline.R;
 import vn.poly.musicoffline.adapter.Music_UaThich_Adapter;
-import vn.poly.musicoffline.model.Music;
 import vn.poly.musicoffline.sql.Favorite_Dao;
 
 public class UaThich_Fragment extends Fragment {
@@ -36,6 +33,7 @@ public class UaThich_Fragment extends Fragment {
         //ánh xạ
         lv_uaThich = view.findViewById(R.id.lv_uaThich);
         favorite_dao = new Favorite_Dao(getContext());
+
         //list
         if (MainActivity.checkListMusic.equals(MainActivity.favoriteList)==false) {
             MainActivity.favoriteList = new ArrayList<>();

@@ -46,7 +46,6 @@ public class PlayerMusicService extends Service {
 
     RemoteViews notificationSmall;
     Notification customNotification;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 

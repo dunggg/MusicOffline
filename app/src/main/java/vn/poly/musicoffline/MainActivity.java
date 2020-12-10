@@ -33,7 +33,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String BROADCAST_ACTION_MAIN = "updateUI";
     boolean mBound = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         favorite_dao = new Favorite_Dao(this);
         favoriteList = new ArrayList<>();
         favoriteList = favorite_dao.getAllSongInFavorite();
-
 
         // lấy dữ liệu từ sharedPreferences
         sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);

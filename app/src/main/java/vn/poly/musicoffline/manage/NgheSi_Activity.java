@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import vn.poly.musicoffline.adapter.Music_NgheSi_Adapter;
