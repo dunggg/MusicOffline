@@ -325,11 +325,11 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
     //khi nhấn vào danh sách phát
     public void danhSachPhat(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view1 = LayoutInflater.from(this).inflate(R.layout.dialog_menu_danh_sach_phat, null);
+        View view1 = LayoutInflater.from(this).inflate(R.layout.dialog_list_danh_sach, null);
         builder.setView(view1);
 
-        ListView lv_dialog_menu_danhSachPhat = view1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
-        TextView tv_dialog_soLuong_danhSach = view1.findViewById(R.id.tv_dialog_soLuong_danhSach);
+        ListView lv_dialog_danhSach = view1.findViewById(R.id.lv_dialog_danhSach);
+        TextView tv_dialog_danhSach = view1.findViewById(R.id.tv_dialog_danhSach);
 
         Dialog dialog = builder.create();
 
@@ -337,11 +337,11 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         playLists = playList_dao.getAllPlayList();
 
         List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(TrinhPhatNhac_Activity.this, playLists);
-        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+        lv_dialog_danhSach.setAdapter(arrayAdapter);
 
-        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
+        tv_dialog_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
-        lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view2, position, id) -> {
+        lv_dialog_danhSach.setOnItemClickListener((parent, view2, position, id) -> {
             // khi nhấn vào thì thêm bài hát vào danh sách
             // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
             if (!playList_dao.checkSongInPlayList(playLists.get(position).getId(), music.getId())) {

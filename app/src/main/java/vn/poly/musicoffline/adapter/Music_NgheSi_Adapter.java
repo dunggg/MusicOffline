@@ -97,11 +97,11 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                 switch (menuItem.getItemId()) {
                     case R.id.menu_add_folder:
                         AlertDialog.Builder builder = new AlertDialog.Builder(viewGroup.getContext());
-                        View viewa1 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dialog_menu_danh_sach_phat, null);
+                        View viewa1 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dialog_list_danh_sach, null);
                         builder.setView(viewa1);
 
-                        ListView lv_dialog_menu_danhSachPhat = viewa1.findViewById(R.id.lv_dialog_menu_danhSachPhat);
-                        TextView tv_dialog_soLuong_danhSach = viewa1.findViewById(R.id.tv_dialog_soLuong_danhSach);
+                        ListView lv_dialog_danhSach = viewa1.findViewById(R.id.lv_dialog_danhSach);
+                        TextView tv_dialog_danhSach = viewa1.findViewById(R.id.tv_dialog_danhSach);
 
                         Dialog dialog = builder.create();
 
@@ -109,12 +109,12 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
                         playLists = playList_dao.getAllPlayList();
 
                         List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
-                        lv_dialog_menu_danhSachPhat.setAdapter(arrayAdapter);
+                        lv_dialog_danhSach.setAdapter(arrayAdapter);
 
-                        tv_dialog_soLuong_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
+                        tv_dialog_danhSach.setText("Danh sách phát của tôi " + "(" + playLists.size() + ")");
 
                         // nhấn vào playlist để thêm bài hát
-                        lv_dialog_menu_danhSachPhat.setOnItemClickListener((parent, view1, i, id) -> {
+                        lv_dialog_danhSach.setOnItemClickListener((parent, view1, i, id) -> {
                             // nếu bài hát chưa tồn tại trong danh sách thì thêm vào
                             if (!playList_dao.checkSongInPlayList(playLists.get(i).getId(), music.getId())) {
                                 playList_dao.addTrackToPlaylist(context, music.getId(), Long.parseLong(playLists.get(i).getId()));

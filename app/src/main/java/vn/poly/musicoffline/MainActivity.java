@@ -55,14 +55,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import vn.poly.musicoffline.sql.Favorite_Dao;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout linear_music_main;
-    CircleImageView img_logo_main;
-    ImageView img_play_main, img_menuOpen_main;
+    ImageView img_logo_main, img_play_main, img_menuOpen_main;
     TextView tv_music_main, tv_ngheSi_main;
     ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
