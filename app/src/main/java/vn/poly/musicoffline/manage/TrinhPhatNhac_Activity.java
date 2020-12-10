@@ -213,7 +213,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         img_uaThich_trinhPhatNhac.setOnClickListener(view -> {
             if (favorite_dao.searchSongFavorite(music.getId())) {
                 // xóa và cập nhật lại danh sách nếu list và adapter của ưa thích đã đc tạo
-                if (MainActivity.music_uaThich_adapter != null && MainActivity.favoriteList != null) {
+                if (MainActivity.music_uaThich_adapter != null) {
                     MainActivity.favoriteList.remove(music);
                     MainActivity.music_uaThich_adapter.notifyDataSetChanged();
                 }
@@ -224,7 +224,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             } else {
 
                 // thêm và cập nhật lại danh sách nếu list và adapter của ưa thích đã đc tạo
-                if (MainActivity.music_uaThich_adapter != null && MainActivity.favoriteList != null) {
+                if (MainActivity.music_uaThich_adapter != null) {
                     MainActivity.favoriteList.add(music);
                     MainActivity.music_uaThich_adapter.notifyDataSetChanged();
                 }
