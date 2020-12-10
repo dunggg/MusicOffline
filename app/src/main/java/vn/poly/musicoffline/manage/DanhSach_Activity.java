@@ -41,7 +41,10 @@ public class DanhSach_Activity extends AppCompatActivity {
 
         playList_dao = new PlayList_Dao(this);
 
-        MainActivity.songPlayList = playList_dao.getAllSongInPlayList(idPlaylist);
+        // nếu mà list đang phát khác list này thì vào đây
+        if (MainActivity.checkListMusic.equals(MainActivity.songPlayList) == false) {
+            MainActivity.songPlayList = playList_dao.getAllSongInPlayList(idPlaylist);
+        }
         music_playList_adapter = new Music_PlayList_Adapter(this, MainActivity.songPlayList, idPlaylist);
         lv_danhSachPhat.setAdapter(music_playList_adapter);
 

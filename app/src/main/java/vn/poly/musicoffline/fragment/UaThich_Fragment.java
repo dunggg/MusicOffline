@@ -35,11 +35,12 @@ public class UaThich_Fragment extends Fragment {
 
         //ánh xạ
         lv_uaThich = view.findViewById(R.id.lv_uaThich);
-
-        //list
-        MainActivity.favoriteList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(getContext());
-        MainActivity.favoriteList = favorite_dao.getAllSongInFavorite();
+        //list
+        if (MainActivity.checkListMusic.equals(MainActivity.favoriteList)==false) {
+            MainActivity.favoriteList = new ArrayList<>();
+            MainActivity.favoriteList = favorite_dao.getAllSongInFavorite();
+        }
 
         MainActivity.music_uaThich_adapter = new Music_UaThich_Adapter(MainActivity.favoriteList, getContext());
         lv_uaThich.setAdapter(MainActivity.music_uaThich_adapter);
@@ -59,7 +60,6 @@ public class UaThich_Fragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        MainActivity.favoriteList = null;
         MainActivity.music_uaThich_adapter = null;
     }
 

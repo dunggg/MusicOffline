@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import vn.poly.musicoffline.sql.Favorite_Dao;
 import vn.poly.musicoffline.sql.PlayList_Dao;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<Music> favoriteList;
     public static Music_UaThich_Adapter music_uaThich_adapter;
     PlayList_Dao playList_dao;
+    Favorite_Dao favorite_dao;
     final int REQUEST_CODE_ACTION_PICK = 345;
     public static final String BROADCAST_ACTION_MAIN = "updateUI";
     boolean mBound = false;
@@ -99,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         checkListMusic = new ArrayList<>();
         listSong = new ArrayList<>();
         songPlayList = new ArrayList<>();
+        favorite_dao = new Favorite_Dao(this);
+        favoriteList = new ArrayList<>();
+        favoriteList = favorite_dao.getAllSongInFavorite();
 
 
         // lấy dữ liệu từ sharedPreferences
