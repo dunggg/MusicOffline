@@ -18,11 +18,33 @@
             android:textColor="#000"
             android:textSize="16dp" />
 
-        <ListView
-            android:id="@+id/lv_dialog_danhSach"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp" />
+            android:layout_height="250dp">
+
+            <ListView
+                android:id="@+id/lv_dialog_danhSach"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp" />
+
+            <FrameLayout
+                android:id="@+id/fl_dialog_danhSach"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="90dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Danh sách phát trống"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </FrameLayout>
 
     </LinearLayout>
 </LinearLayout>

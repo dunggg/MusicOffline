@@ -35,7 +35,7 @@ public class UaThich_Fragment extends Fragment {
         favorite_dao = new Favorite_Dao(getContext());
 
         //list
-        if (MainActivity.checkListMusic.equals(MainActivity.favoriteList)==false) {
+        if (MainActivity.checkListMusic.equals(MainActivity.favoriteList) == false) {
             MainActivity.favoriteList = new ArrayList<>();
             MainActivity.favoriteList = favorite_dao.getAllSongInFavorite();
         }

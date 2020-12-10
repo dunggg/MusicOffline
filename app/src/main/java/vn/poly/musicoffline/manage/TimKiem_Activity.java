@@ -96,6 +96,7 @@ public class TimKiem_Activity extends AppCompatActivity implements SearchView.On
     private void filterMusic(String text) {
         if (text.trim().length() == 0) {
             listSearchMusic.clear();
+
         } else {
             listSearchMusic.clear();
             listSearchMusic.addAll(MainActivity.listSong);

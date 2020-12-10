@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -102,11 +103,16 @@ public class Music_NgheSi_Adapter extends BaseAdapter {
 
                         ListView lv_dialog_danhSach = viewa1.findViewById(R.id.lv_dialog_danhSach);
                         TextView tv_dialog_danhSach = viewa1.findViewById(R.id.tv_dialog_danhSach);
+                        FrameLayout fl_dialog_danhSach = viewa1.findViewById(R.id.fl_dialog_danhSach);
 
                         Dialog dialog = builder.create();
 
                         playLists = new ArrayList<>();
                         playLists = playList_dao.getAllPlayList();
+
+                        if (playLists.size() == 0) {
+                            fl_dialog_danhSach.setVisibility(View.VISIBLE);
+                        }
 
                         List_DanhSach_Adapter arrayAdapter = new List_DanhSach_Adapter(context, playLists);
                         lv_dialog_danhSach.setAdapter(arrayAdapter);
