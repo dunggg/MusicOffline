@@ -51,7 +51,6 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
     Animation a1, a2;
     Music music;
     final int REQUEST_CODE_ACTION_PICK = 123;
-    List<Music> musicList = MainActivity.checkListMusic;
     PlayList_Dao playList_dao;
     Favorite_Dao favorite_dao;
     List<PlayList> playLists;
@@ -76,7 +75,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         favorite_dao = new Favorite_Dao(this);
 
         // lấy ra bài hát hiện tại
-        music = musicList.get(Music_Fragment.positionBaiHat);
+        music = MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat);
         setDataView();
         musicPlay();
 
@@ -216,6 +215,13 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                 if (MainActivity.music_uaThich_adapter != null) {
                     MainActivity.favoriteList.remove(music);
                     MainActivity.music_uaThich_adapter.notifyDataSetChanged();
+
+                    // đang phát ở list yêu thích mà trong bài hát xóa tim bài cuối cùng thì chuyển sang list bài hát
+                    if(MainActivity.checkListMusic.equals(MainActivity.favoriteList)&&MainActivity.favoriteList.size()==0){
+                        MainActivity.checkListMusic = MainActivity.listSong;
+                        Music_Fragment.positionBaiHat = 0;
+                    }
+
                 }
                 // == true là đã nằm trong danh sách favorite
                 //1 là xóa khỏi danh sách yêu thích
@@ -245,11 +251,11 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
         img_tiepTheo_trinhPhatNhac.setOnClickListener(v -> {
             Music_Fragment.positionBaiHat++;
             // khi click lên mà vượt quá size của mảng thì gán về 0
-            if (Music_Fragment.positionBaiHat == musicList.size()) {
+            if (Music_Fragment.positionBaiHat == MainActivity.checkListMusic.size()) {
                 Music_Fragment.positionBaiHat = 0;
             }
-            music = musicList.get(Music_Fragment.positionBaiHat);
-            MainActivity.playerMusicService.play(music, musicList);
+            music = MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat);
+            MainActivity.playerMusicService.play(music, MainActivity.checkListMusic);
         });
 
         // nhấn vào quay lại
@@ -257,10 +263,10 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
             Music_Fragment.positionBaiHat--;
             // khi cick quay lại mà bé hơn 0 thì cho về vị trí cuối cùng của mảng
             if (Music_Fragment.positionBaiHat < 0) {
-                Music_Fragment.positionBaiHat = musicList.size() - 1;
+                Music_Fragment.positionBaiHat = MainActivity.checkListMusic.size() - 1;
             }
-            music = musicList.get(Music_Fragment.positionBaiHat);
-            MainActivity.playerMusicService.play(music, musicList);
+            music = MainActivity.checkListMusic.get(Music_Fragment.positionBaiHat);
+            MainActivity.playerMusicService.play(music, MainActivity.checkListMusic);
         });
 
         // nhấn vào lặp lại
