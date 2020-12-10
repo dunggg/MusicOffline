@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         songPlayList = new ArrayList<>();
         favorite_dao = new Favorite_Dao(this);
         favoriteList = new ArrayList<>();
-        favoriteList = favorite_dao.getAllSongInFavorite();
 
         // lấy dữ liệu từ sharedPreferences
         sharedPreferences = getSharedPreferences("DATA_MUSIC", MODE_PRIVATE);
@@ -111,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         // nếu đc cấp quyền thì load fragment vào activity
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             setupViewPager();
+            favoriteList = favorite_dao.getAllSongInFavorite();
             listSong = getDataMusic();
             checkListMusic = listSong;
             // serviceconnection theo dõi kết nối đến dịch vụ
