@@ -118,28 +118,28 @@ public class Music_PlayList_Adapter extends BaseAdapter {
 
                             // nếu vị trí của bát hát trc khi xóa bằng vị trí của bài hát trên thông báo thì thay đổi giao diện
                             // ngược lại thì chỉ xóa bài hát mà không thay đổi giao diện
-                                if (position == Music_Fragment.positionBaiHat) {
-                                    if (position == musicList.size()) {
-                                        // nếu là vị trí cuối cùng
-                                        // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
-                                        if (musicList.size() == 0) {
-                                            // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
-                                            MainActivity.playerMusicService.stop();
-                                            MainActivity.playerMusicService.clearData();
-                                            MainActivity.playerMusicService.hideNotification();
-                                            Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
-                                            intent.putExtra("position", -1);
-                                            context.sendBroadcast(intent);
-                                        } else {
-                                            // nếu sau khi xóa vẫn còn nhạc
-                                            Music_Fragment.positionBaiHat = 0;
-                                            MainActivity.playerMusicService.play(musicList.get(0), musicList);
-                                        }
+                            if (position == Music_Fragment.positionBaiHat) {
+                                if (position == musicList.size()) {
+                                    // nếu là vị trí cuối cùng
+                                    // so sánh vị trí bài hát trước khi xóa và size của list sau khi xóa nếu bằng nhau thì chứng tỏ bài hát đấy ở cuối cùng của list
+                                    if (musicList.size() == 0) {
+                                        // nếu sau khi xóa size bằng 0 thì dừng nhạc tắt thông báo xóa dữ liệu lưu trữ
+                                        MainActivity.playerMusicService.stop();
+                                        MainActivity.playerMusicService.clearData();
+                                        MainActivity.playerMusicService.hideNotification();
+                                        Intent intent = new Intent(MainActivity.BROADCAST_ACTION_MAIN);
+                                        intent.putExtra("position", -1);
+                                        context.sendBroadcast(intent);
                                     } else {
-                                        // nếu không phải vị trí cuối cùng
-                                        MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
+                                        // nếu sau khi xóa vẫn còn nhạc
+                                        Music_Fragment.positionBaiHat = 0;
+                                        MainActivity.playerMusicService.play(musicList.get(0), musicList);
                                     }
+                                } else {
+                                    // nếu không phải vị trí cuối cùng
+                                    MainActivity.playerMusicService.play(musicList.get(Music_Fragment.positionBaiHat), musicList);
                                 }
+                            }
 
                             Toast.makeText(context, "Xóa bài hát " + music.getTitle(), Toast.LENGTH_SHORT).show();
                             alertDialog2.dismiss();

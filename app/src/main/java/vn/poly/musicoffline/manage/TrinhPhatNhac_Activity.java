@@ -217,7 +217,7 @@ public class TrinhPhatNhac_Activity extends AppCompatActivity {
                     MainActivity.music_uaThich_adapter.notifyDataSetChanged();
 
                     // đang phát ở list yêu thích mà trong bài hát xóa tim bài cuối cùng thì chuyển sang list bài hát
-                    if(MainActivity.checkListMusic.equals(MainActivity.favoriteList)&&MainActivity.favoriteList.size()==0){
+                    if (MainActivity.checkListMusic.equals(MainActivity.favoriteList) && MainActivity.favoriteList.size() == 0) {
                         MainActivity.checkListMusic = MainActivity.listSong;
                         Music_Fragment.positionBaiHat = 0;
                     }
